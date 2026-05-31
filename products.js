@@ -1,10 +1,10 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 1:13:36 a. m.
+   31/5/2026, 1:17:10 a. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
-  "brandName": "TUMARCA",
+  "brandName": "MODA ESTUDIO",
   "brandDot": ".",
   "tagline": "Comfort-tech wear hecho en Colombia. Prendas que te brindan la libertad de moverte sin restricciones.",
   "announcements": [
@@ -43,18 +43,6 @@ window.COLLECTIONS = [
     "name": "Nexis",
     "description": "Moda y funcionalidad sin esfuerzo.",
     "image": "https://picsum.photos/seed/nexis/800/1100?grayscale"
-  },
-  {
-    "id": "horizon",
-    "name": "Horizon",
-    "description": "Libertad de movimiento sin restricciones.",
-    "image": "https://picsum.photos/seed/horizon/800/1100?grayscale"
-  },
-  {
-    "id": "ascend",
-    "name": "Ascend",
-    "description": "Tecnología textil para nuevos horizontes.",
-    "image": "https://picsum.photos/seed/ascend/800/1100?grayscale"
   }
 ];
 
