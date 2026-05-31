@@ -1,6 +1,6 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 8:37:12 p. m.
+   31/5/2026, 8:40:37 p. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
@@ -8,7 +8,9 @@ window.SITE_CONFIG = {
   "brandDot": ".",
   "tagline": "Comfort-tech wear hecho en Colombia.",
   "announcementBarVisible": true,
-  "announcements": [],
+  "announcements": [
+    "Fabricamos tu chaqueta a partir de 8 unidades  ( cotiza tu producto )"
+  ],
   "navigation": [
     {
       "label": "Productos",
