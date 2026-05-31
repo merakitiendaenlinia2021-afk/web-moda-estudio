@@ -1,6 +1,6 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 9:01:30 p. m.
+   31/5/2026, 9:11:20 p. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
@@ -124,7 +124,8 @@ window.PRODUCTS = [
     "shortDescription": "",
     "longDescription": "",
     "images": [
-      "https://i.ibb.co/wFDSr9k6/Dise-o-sin-t-tulo-8.jpg"
+      "https://i.ibb.co/wFDSr9k6/Dise-o-sin-t-tulo-8.jpg",
+      "https://i.ibb.co/FLDvv3Xh/Gemini-Generated-Image-97ss197ss197ss19.png"
     ],
     "colors": [],
     "sizes": [],
