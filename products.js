@@ -1,71 +1,181 @@
-/* PRODUCTS.JS — FASE 3 (completa) */
+/* ============================================================
+   PRODUCTS.JS — Publicado desde el panel admin
+   31/5/2026, 6:44:01 p. m.
+   ============================================================ */
 
 window.SITE_CONFIG = {
-  brandName: "MODA ESTUDIO",
-  brandDot: ".",
-  tagline: "Comfort-tech wear hecho en Colombia.",
-  announcementBarVisible: true,
-  announcements: ["Envío gratis en compras superiores a $300.000 COP","Hasta 4 cuotas sin interés","Cambios y devoluciones gratis","Hecho en Colombia"],
-  navigation: [
-    {label: "Productos", href: "#productos"},
-    {label: "Colecciones", href: "#colecciones"},
-    {label: "Nosotros", href: "#nosotros"},
-    {label: "Tiendas", href: "#tiendas"}
+  "brandName": "MODA ESTUDIO",
+  "brandDot": ".",
+  "tagline": "Comfort-tech wear hecho en Colombia.",
+  "announcementBarVisible": true,
+  "announcements": [
+    "Envío gratis en compras superiores a $300.000 COP",
+    "Hasta 4 cuotas sin interés",
+    "Cambios y devoluciones gratis",
+    "Hecho en Colombia"
   ],
-  hero: { eyebrow: "— Colección Nexis · Otoño 2026", titleLine1: "Comfort", titleLine2Italic: "tech", titleLine2Rest: "wear", ctaPrimary: "Comprar ahora", ctaSecondary: "Nuestra filosofía", image: "https://picsum.photos/seed/techwear1/1920/1200?grayscale" },
-  features: ["Travel-friendly","Sport-proof","All day-wear","Hecho en Colombia","Confección de lujo","Tecnología textil"],
-  manifesto: {
-    visible: true,
-    eyebrow: "— Nuestra filosofía",
-    title: "Vestimos a",
-    titleItalic: "quien se mueve",
-    body1: "Desafiamos las normas convencionales de la moda. Creamos prendas con un enfoque holístico que integra estética, funcionalidad, comodidad y dinamismo.",
-    body2: "Ya sea en un entorno urbano dinámico o conquistando nuevas aventuras, te brindamos la libertad de moverte con confianza.",
-    image: "https://picsum.photos/seed/manifesto/800/1000?grayscale",
-    pills: ["Travel-friendly","Sport-proof","All day-wear","Made in Colombia"]
+  "navigation": [
+    {
+      "label": "Productos",
+      "href": "#productos"
+    },
+    {
+      "label": "Colecciones",
+      "href": "#colecciones"
+    },
+    {
+      "label": "Nosotros",
+      "href": "#nosotros"
+    },
+    {
+      "label": "Tiendas",
+      "href": "#tiendas"
+    }
+  ],
+  "hero": {
+    "eyebrow": "— Colección Nexis · Otoño 2026",
+    "titleLine1": "Comfort",
+    "titleLine2Italic": "tech",
+    "titleLine2Rest": "wear",
+    "ctaPrimary": "Comprar ahora",
+    "ctaSecondary": "Nuestra filosofía",
+    "image": "https://picsum.photos/seed/techwear1/1920/1200?grayscale"
   },
-  editorial: {
-    visible: true,
-    blocks: [
-      { title: "Lookbook", italic: "SS26", subtitle: "Una nueva forma de habitar la ciudad.", image: "https://picsum.photos/seed/edit1/1200/800?grayscale", linkText: "Explorar", visible: true },
-      { title: "Tiendas", italic: "físicas", subtitle: "Bogotá · Medellín · Cali · Cartagena", image: "https://picsum.photos/seed/edit2/1200/800?grayscale", linkText: "Ver ubicaciones", visible: true }
+  "features": [
+    "Travel-friendly",
+    "Sport-proof",
+    "All day-wear",
+    "Hecho en Colombia",
+    "Confección de lujo",
+    "Tecnología textil"
+  ],
+  "manifesto": {
+    "visible": true,
+    "eyebrow": "— Nuestra filosofía",
+    "title": "Vestimos a",
+    "titleItalic": "quien se mueve",
+    "body1": "Desafiamos las normas convencionales de la moda. Creamos prendas con un enfoque holístico que integra estética, funcionalidad, comodidad y dinamismo.",
+    "body2": "Ya sea en un entorno urbano dinámico o conquistando nuevas aventuras, te brindamos la libertad de moverte con confianza.",
+    "image": "https://picsum.photos/seed/manifesto/800/1000?grayscale",
+    "pills": [
+      "Travel-friendly",
+      "Sport-proof",
+      "All day-wear",
+      "Made in Colombia"
     ]
   },
-  newsletter: {
-    visible: true,
-    eyebrow: "— Únete",
-    title: "Sé el",
-    titleItalic: "primero",
-    titleRest: "en saber",
-    subtitle: "Nuevos lanzamientos y acceso anticipado a colecciones limitadas.",
-    placeholder: "Tu correo electrónico",
-    buttonText: "Suscribirme"
+  "editorial": {
+    "visible": true,
+    "blocks": [
+      {
+        "title": "Lookbook",
+        "italic": "SS26",
+        "subtitle": "Una nueva forma de habitar la ciudad.",
+        "image": "https://picsum.photos/seed/edit1/1200/800?grayscale",
+        "linkText": "Explorar",
+        "visible": true
+      },
+      {
+        "title": "Tiendas",
+        "italic": "físicas",
+        "subtitle": "Bogotá · Medellín · Cali · Cartagena",
+        "image": "https://picsum.photos/seed/edit2/1200/800?grayscale",
+        "linkText": "Ver ubicaciones",
+        "visible": true
+      }
+    ]
   },
-  footer: {
-    columns: [
-      { title: "Tienda", links: [{label:"Todos los productos",href:"#"},{label:"Outlet",href:"#"}] },
-      { title: "Ayuda", links: [{label:"Envíos",href:"#"},{label:"Devoluciones",href:"#"},{label:"Contáctanos",href:"#"}] },
-      { title: "Empresa", links: [{label:"Nosotros",href:"#nosotros"},{label:"Panel admin",href:"admin.html"}] }
+  "newsletter": {
+    "visible": true,
+    "eyebrow": "— Únete",
+    "title": "Sé el",
+    "titleItalic": "primero",
+    "titleRest": "en saber",
+    "subtitle": "Nuevos lanzamientos y acceso anticipado a colecciones limitadas.",
+    "placeholder": "Tu correo electrónico",
+    "buttonText": "Suscribirme"
+  },
+  "footer": {
+    "columns": [
+      {
+        "title": "Tienda",
+        "links": [
+          {
+            "label": "Todos los productos",
+            "href": "#"
+          },
+          {
+            "label": "Outlet",
+            "href": "#"
+          }
+        ]
+      },
+      {
+        "title": "Ayuda",
+        "links": [
+          {
+            "label": "Envíos",
+            "href": "#"
+          },
+          {
+            "label": "Devoluciones",
+            "href": "#"
+          },
+          {
+            "label": "Contáctanos",
+            "href": "#"
+          }
+        ]
+      },
+      {
+        "title": "Empresa",
+        "links": [
+          {
+            "label": "Nosotros",
+            "href": "#nosotros"
+          },
+          {
+            "label": "Panel admin",
+            "href": "admin.html"
+          }
+        ]
+      }
     ],
-    payments: ["VISA","MASTER","PSE","NEQUI","ADDI"],
-    copyrightSuffix: "Hecho en Colombia"
+    "payments": [
+      "VISA",
+      "MASTER",
+      "PSE",
+      "NEQUI",
+      "ADDI"
+    ],
+    "copyrightSuffix": "Hecho en Colombia"
   },
-  socials: { instagram: "#", tiktok: "#", linkedin: "#" }
+  "socials": {
+    "instagram": "#",
+    "tiktok": "#",
+    "linkedin": "#"
+  }
 };
 
 window.COLLECTIONS = [
-  { id: "nexis", name: "Nexis", description: "Moda y funcionalidad sin esfuerzo.", image: "https://picsum.photos/seed/nexis/800/1100?grayscale" },
-  { id: "horizon", name: "Horizon", description: "Libertad de movimiento sin restricciones.", image: "https://picsum.photos/seed/horizon/800/1100?grayscale" },
-  { id: "ascend", name: "Ascend", description: "Tecnología textil para nuevos horizontes.", image: "https://picsum.photos/seed/ascend/800/1100?grayscale" }
+  {
+    "id": "nexis",
+    "name": "Nexis",
+    "description": "Moda y funcionalidad sin esfuerzo.",
+    "image": "https://picsum.photos/seed/nexis/800/1100?grayscale"
+  },
+  {
+    "id": "horizon",
+    "name": "Horizon",
+    "description": "Libertad de movimiento sin restricciones.",
+    "image": "https://picsum.photos/seed/horizon/800/1100?grayscale"
+  },
+  {
+    "id": "ascend",
+    "name": "Ascend",
+    "description": "Tecnología textil para nuevos horizontes.",
+    "image": "https://picsum.photos/seed/ascend/800/1100?grayscale"
+  }
 ];
 
-window.PRODUCTS = [
-  { id:"verge", name:"Buzo Verge — Cuello redondo", collection:"nexis", price:379900, oldPrice:null, tag:"new", images:["https://picsum.photos/seed/p1/600/750?grayscale","https://picsum.photos/seed/p1b/600/750?grayscale"], shortDescription:"Buzo techwear de cuello redondo.", longDescription:"Diseñado con tela performance.", colors:["#0A0A0A","#6B5D4F","#D4CFC4"], sizes:["S","M","L","XL"], sku:"VRG-001", active:true },
-  { id:"cling", name:"Camiseta Cling — Café", collection:"nexis", price:264900, oldPrice:329900, tag:"sale", images:["https://picsum.photos/seed/p2/600/750?grayscale","https://picsum.photos/seed/p2b/600/750?grayscale"], shortDescription:"Camiseta relaxed fit.", longDescription:"Tejido de algodón premium.", colors:["#6B5D4F","#0A0A0A"], sizes:["S","M","L","XL"], sku:"CLG-002", active:true },
-  { id:"blaze", name:"Short Blaze — Negro", collection:"horizon", price:249900, oldPrice:null, tag:null, images:["https://picsum.photos/seed/p3/600/750?grayscale","https://picsum.photos/seed/p3b/600/750?grayscale"], shortDescription:"Short técnico.", longDescription:"Para deportistas.", colors:["#0A0A0A","#3A4D3A"], sizes:["S","M","L"], sku:"BLZ-003", active:true },
-  { id:"drift", name:"Pantalón Drift — Cargo técnico", collection:"horizon", price:429900, oldPrice:null, tag:"bestseller", images:["https://picsum.photos/seed/p4/600/750?grayscale","https://picsum.photos/seed/p4b/600/750?grayscale"], shortDescription:"Pantalón cargo.", longDescription:"Urbano-outdoor.", colors:["#0A0A0A","#5C5045","#2B3329"], sizes:["28","30","32","34","36"], sku:"DRF-004", active:true },
-  { id:"flux", name:"Chaqueta Flux — Shell impermeable", collection:"ascend", price:649900, oldPrice:null, tag:null, images:["https://picsum.photos/seed/p5/600/750?grayscale","https://picsum.photos/seed/p5b/600/750?grayscale"], shortDescription:"Chaqueta shell.", longDescription:"Impermeable.", colors:["#0A0A0A","#4A4A4A"], sizes:["S","M","L","XL"], sku:"FLX-005", active:true },
-  { id:"orbit", name:"Hoodie Orbit — Oversize", collection:"nexis", price:399900, oldPrice:499900, tag:"sale", images:["https://picsum.photos/seed/p6/600/750?grayscale","https://picsum.photos/seed/p6b/600/750?grayscale"], shortDescription:"Hoodie oversize.", longDescription:"Comodidad extrema.", colors:["#0A0A0A","#D4CFC4","#6B5D4F"], sizes:["S","M","L","XL","XXL"], sku:"ORB-006", active:true },
-  { id:"trail", name:"Camiseta Trail — Performance", collection:"ascend", price:219900, oldPrice:null, tag:null, images:["https://picsum.photos/seed/p7/600/750?grayscale","https://picsum.photos/seed/p7b/600/750?grayscale"], shortDescription:"Camiseta deportiva.", longDescription:"Anti-sudor.", colors:["#FFFFFF","#0A0A0A","#6B5D4F"], sizes:["S","M","L"], sku:"TRL-007", active:true },
-  { id:"pulse", name:"Buzo Pulse — Tech fleece", collection:"ascend", price:459900, oldPrice:null, tag:"new", images:["https://picsum.photos/seed/p8/600/750?grayscale","https://picsum.photos/seed/p8b/600/750?grayscale"], shortDescription:"Buzo tech fleece.", longDescription:"Aislamiento térmico.", colors:["#0A0A0A","#4A4A4A"], sizes:["S","M","L","XL"], sku:"PLS-008", active:true }
-];
+window.PRODUCTS = [];
