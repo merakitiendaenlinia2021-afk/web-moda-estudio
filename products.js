@@ -1,13 +1,13 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 7:08:35 p. m.
+   31/5/2026, 7:09:09 p. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
   "brandName": "MODA ESTUDIO",
   "brandDot": ".",
   "tagline": "Comfort-tech wear hecho en Colombia.",
-  "announcementBarVisible": false,
+  "announcementBarVisible": true,
   "announcements": [],
   "navigation": [
     {
