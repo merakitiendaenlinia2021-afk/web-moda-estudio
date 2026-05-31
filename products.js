@@ -1,6 +1,6 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 6:47:21 p. m.
+   31/5/2026, 6:50:08 p. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
@@ -17,18 +17,10 @@ window.SITE_CONFIG = {
     {
       "label": "Colecciones",
       "href": "#colecciones"
-    },
-    {
-      "label": "Nosotros",
-      "href": "#nosotros"
-    },
-    {
-      "label": "Tiendas",
-      "href": "#tiendas"
     }
   ],
   "hero": {
-    "eyebrow": "— Colección Nexis · Otoño 2026",
+    "eyebrow": "",
     "titleLine1": "Comfort",
     "titleLine2Italic": "tech",
     "titleLine2Rest": "wear",
@@ -45,7 +37,7 @@ window.SITE_CONFIG = {
     "Tecnología textil"
   ],
   "manifesto": {
-    "visible": true,
+    "visible": false,
     "eyebrow": "— Nuestra filosofía",
     "title": "Vestimos a",
     "titleItalic": "quien se mueve",
@@ -60,7 +52,7 @@ window.SITE_CONFIG = {
     ]
   },
   "editorial": {
-    "visible": true,
+    "visible": false,
     "blocks": [
       {
         "title": "Lookbook",
@@ -68,7 +60,7 @@ window.SITE_CONFIG = {
         "subtitle": "Una nueva forma de habitar la ciudad.",
         "image": "https://picsum.photos/seed/edit1/1200/800?grayscale",
         "linkText": "Explorar",
-        "visible": true
+        "visible": false
       },
       {
         "title": "Tiendas",
@@ -76,7 +68,7 @@ window.SITE_CONFIG = {
         "subtitle": "Bogotá · Medellín · Cali · Cartagena",
         "image": "https://picsum.photos/seed/edit2/1200/800?grayscale",
         "linkText": "Ver ubicaciones",
-        "visible": true
+        "visible": false
       }
     ]
   },
