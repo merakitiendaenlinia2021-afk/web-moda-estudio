@@ -1,6 +1,6 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 8:40:55 p. m.
+   31/5/2026, 8:59:52 p. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
@@ -112,4 +112,22 @@ window.COLLECTIONS = [
   }
 ];
 
-window.PRODUCTS = [];
+window.PRODUCTS = [
+  {
+    "id": "chaqueta-casual",
+    "name": "Chaqueta casual",
+    "price": 66000,
+    "oldPrice": null,
+    "collection": "mayoristas",
+    "tag": null,
+    "sku": "",
+    "shortDescription": "",
+    "longDescription": "",
+    "images": [
+      "https://i.ibb.co/wFDSr9k6/Dise-o-sin-t-tulo-8.jpg"
+    ],
+    "colors": [],
+    "sizes": [],
+    "active": true
+  }
+];
