@@ -212,18 +212,13 @@ ul{list-style:none}
 </head>
 <body>
 
-<div class="announce"><div class="announce-track" id="announceTrack"></div></div>
+<div class="announce" id="announceBar"><div class="announce-track" id="announceTrack"></div></div>
 
 <header class="header">
   <div class="nav">
     <div class="nav-left">
       <button class="hamburger" id="hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
-      <ul class="nav-links">
-        <li><a href="#productos">Productos</a></li>
-        <li><a href="#colecciones">Colecciones</a></li>
-        <li><a href="#nosotros">Nosotros</a></li>
-        <li><a href="#tiendas">Tiendas</a></li>
-      </ul>
+      <ul class="nav-links" id="navLinks"></ul>
     </div>
     <div class="logo-wrap"><a href="#" class="logo" id="brandLogo"></a></div>
     <div class="nav-right">
@@ -236,12 +231,7 @@ ul{list-style:none}
 
 <div class="mobile-menu" id="mobileMenu">
   <button class="close-btn" id="closeMenu"><svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <nav><ul>
-    <li><a href="#productos">Productos</a></li>
-    <li><a href="#colecciones">Colecciones</a></li>
-    <li><a href="#nosotros">Nosotros</a></li>
-    <li><a href="#tiendas">Tiendas Físicas</a></li>
-  </ul></nav>
+  <nav><ul id="mobileNavLinks"></ul></nav>
   <div class="menu-bottom"><a href="admin.html">Panel admin</a></div>
 </div>
 
@@ -360,7 +350,13 @@ document.getElementById('footerCopy').textContent=`© ${new Date().getFullYear()
 document.title=`${cfg.brandName||'MODA ESTUDIO'}`;
 
 const ann=cfg.announcements||[];
-document.getElementById('announceTrack').innerHTML=[...ann,...ann].map(t=>`<span>${escapeHTML(t)}</span><span>◆</span>`).join('');
+if(cfg.announcementBarVisible===false){document.getElementById('announceBar').style.display='none'}
+else{document.getElementById('announceTrack').innerHTML=[...ann,...ann].map(t=>`<span>${escapeHTML(t)}</span><span>◆</span>`).join('')}
+
+// NAV
+const navItems=cfg.navigation||[];
+document.getElementById('navLinks').innerHTML=navItems.map(n=>`<li><a href="${escapeHTML(n.href)}">${escapeHTML(n.label)}</a></li>`).join('');
+document.getElementById('mobileNavLinks').innerHTML=navItems.map(n=>`<li><a href="${escapeHTML(n.href)}">${escapeHTML(n.label)}</a></li>`).join('');
 
 const hero=cfg.hero||{};
 document.getElementById('heroBg').style.backgroundImage=`url('${hero.image||''}')`;

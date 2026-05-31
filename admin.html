@@ -146,6 +146,7 @@ input,textarea,select{font:inherit}
     <nav>
       <button class="active" data-view="products"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>Productos</button>
       <button data-view="collections"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Colecciones</button>
+      <button data-view="content"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h7"/></svg>Contenido del sitio</button>
       <button data-view="settings"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Configuración</button>
       <button data-view="export"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Publicar cambios</button>
     </nav>
@@ -171,6 +172,67 @@ input,textarea,select{font:inherit}
     <section class="view" id="view-collections">
       <div class="topbar"><h1>Colecciones</h1><div class="actions"><button class="btn btn-primary" onclick="openCollectionModal()">+ Nueva colección</button></div></div>
       <div id="collectionsList"></div>
+    </section>
+
+    <section class="view" id="view-content">
+      <div class="topbar"><h1>Contenido del sitio</h1></div>
+
+      <!-- BARRA DE ANUNCIOS -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:16px;flex-wrap:wrap;">
+          <div>
+            <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">📢 Barra superior</h3>
+            <p style="font-size:13px;color:var(--muted);">Los mensajes que rotan arriba del sitio.</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="annBarVisible"><div class="switch-track"></div></label>
+        </div>
+        <div id="annList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;"></div>
+        <div class="chip-add">
+          <input type="text" id="annInput" placeholder="Nuevo mensaje (ej: 10% OFF en tu primera compra)">
+          <button onclick="addAnnouncement()">Agregar</button>
+        </div>
+        <button class="btn btn-primary" style="margin-top:16px;" onclick="saveContent()">Guardar barra superior</button>
+      </div>
+
+      <!-- HERO -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">🎬 Hero (portada)</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">La sección grande de bienvenida con la imagen de fondo.</p>
+        <div class="form-group">
+          <label class="form-label">Eyebrow <span class="hint">(texto pequeño arriba del título)</span></label>
+          <input class="form-input" id="hero-eyebrow" placeholder="— Colección Otoño 2026">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Primera línea del título</label>
+          <input class="form-input" id="hero-title1" placeholder="Comfort">
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Palabra itálica</label><input class="form-input" id="hero-title2i" placeholder="tech"></div>
+          <div class="form-group"><label class="form-label">Resto de la línea</label><input class="form-input" id="hero-title2r" placeholder="wear"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Imagen de fondo (URL)</label>
+          <input class="form-input" id="hero-image" placeholder="https://...">
+          <div id="hero-img-preview" style="margin-top:12px;"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Botón principal (texto)</label><input class="form-input" id="hero-cta1" placeholder="Comprar ahora"></div>
+          <div class="form-group"><label class="form-label">Botón secundario (texto)</label><input class="form-input" id="hero-cta2" placeholder="Nuestra filosofía"></div>
+        </div>
+        <button class="btn btn-primary" onclick="saveContent()">Guardar hero</button>
+      </div>
+
+      <!-- MENÚ NAVEGACIÓN -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">🧭 Menú de navegación</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Las opciones que aparecen arriba (Productos, Colecciones, etc.).</p>
+        <div id="navList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;"></div>
+        <button class="btn btn-secondary" onclick="addNavItem()" style="margin-bottom:16px;">+ Agregar opción</button>
+        <div style="background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:16px;font-size:12px;color:var(--muted);">
+          💡 <strong>Tip:</strong> en "Enlace" puedes usar <code>#productos</code>, <code>#colecciones</code>, <code>#nosotros</code> para ir a secciones del mismo sitio. O una URL completa como <code>https://...</code>
+        </div>
+        <button class="btn btn-primary" onclick="saveContent()">Guardar menú</button>
+      </div>
     </section>
 
     <section class="view" id="view-settings">
@@ -317,7 +379,7 @@ function loadData(){
   const stored=localStorage.getItem(STORAGE_KEY);
   if(stored){try{const d=JSON.parse(stored);state.config=d.config;state.collections=d.collections;state.products=migrateProducts(d.products);state.dirty=d.dirty||false}catch(e){loadDefault()}}
   else loadDefault();
-  renderProducts();renderCollections();renderSettings();updateUnsavedBadge();
+  renderProducts();renderCollections();renderSettings();renderContent();updateUnsavedBadge();
 }
 function migrateProducts(prods){
   return (prods||[]).map(p=>{
@@ -468,6 +530,80 @@ function quickDeleteCollection(i){if(!confirm(`¿Eliminar "${state.collections[i
 function renderSettings(){const c=state.config||{};document.getElementById('cfg-brandName').value=c.brandName||'';document.getElementById('cfg-tagline').value=c.tagline||''}
 function saveSettings(){state.config.brandName=document.getElementById('cfg-brandName').value.trim();state.config.tagline=document.getElementById('cfg-tagline').value.trim();const np=document.getElementById('cfg-newPassword').value;if(np&&np.length>=4){localStorage.setItem(PWD_KEY,np);document.getElementById('cfg-newPassword').value='';toast('Contraseña actualizada')}else if(np&&np.length<4){return toast('Mínimo 4 caracteres','error')}persist();toast('Guardado')}
 
+// =========== CONTENIDO DEL SITIO ===========
+function renderContent(){
+  const c=state.config||{};
+  if(!c.announcements)c.announcements=[];
+  if(c.announcementBarVisible===undefined)c.announcementBarVisible=true;
+  if(!c.navigation)c.navigation=[{label:"Productos",href:"#productos"},{label:"Colecciones",href:"#colecciones"},{label:"Nosotros",href:"#nosotros"},{label:"Tiendas",href:"#tiendas"}];
+  if(!c.hero)c.hero={};
+  
+  document.getElementById('annBarVisible').checked=c.announcementBarVisible!==false;
+  renderAnnList();
+  renderNavList();
+  
+  const h=c.hero;
+  document.getElementById('hero-eyebrow').value=h.eyebrow||'';
+  document.getElementById('hero-title1').value=h.titleLine1||'';
+  document.getElementById('hero-title2i').value=h.titleLine2Italic||'';
+  document.getElementById('hero-title2r').value=h.titleLine2Rest||'';
+  document.getElementById('hero-image').value=h.image||'';
+  document.getElementById('hero-cta1').value=h.ctaPrimary||'';
+  document.getElementById('hero-cta2').value=h.ctaSecondary||'';
+  updateHeroPreview();
+}
+function renderAnnList(){
+  const c=state.config;
+  document.getElementById('annList').innerHTML=(c.announcements||[]).map((a,i)=>`
+    <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;">
+      <input class="url-input" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(a)}" oninput="updateAnn(${i},this.value)">
+      <button class="move-btn" onclick="moveAnn(${i},-1)" ${i===0?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button>
+      <button class="move-btn" onclick="moveAnn(${i},1)" ${i===c.announcements.length-1?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <button class="del-btn" onclick="removeAnn(${i})" style="width:30px;height:30px;border-radius:6px;color:var(--muted);"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>`).join('')||'<div style="font-size:13px;color:var(--muted);padding:12px 0;">No hay mensajes. Agrega el primero abajo.</div>';
+}
+function addAnnouncement(){const v=document.getElementById('annInput').value.trim();if(!v)return toast('Escribe el mensaje','error');state.config.announcements=state.config.announcements||[];state.config.announcements.push(v);document.getElementById('annInput').value='';renderAnnList();persist();toast('Mensaje agregado')}
+function updateAnn(i,v){state.config.announcements[i]=v;clearTimeout(window._annT);window._annT=setTimeout(()=>persist(),500)}
+function removeAnn(i){state.config.announcements.splice(i,1);renderAnnList();persist()}
+function moveAnn(i,d){const ni=i+d;const a=state.config.announcements;if(ni<0||ni>=a.length)return;[a[i],a[ni]]=[a[ni],a[i]];renderAnnList();persist()}
+document.getElementById('annInput')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addAnnouncement()}});
+
+function renderNavList(){
+  const c=state.config;
+  document.getElementById('navList').innerHTML=(c.navigation||[]).map((n,i)=>`
+    <div style="display:grid;grid-template-columns:1fr 1fr auto auto auto;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;">
+      <input placeholder="Etiqueta (ej: Productos)" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(n.label)}" oninput="updateNav(${i},'label',this.value)">
+      <input placeholder="Enlace (ej: #productos)" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(n.href)}" oninput="updateNav(${i},'href',this.value)">
+      <button class="move-btn" onclick="moveNav(${i},-1)" ${i===0?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button>
+      <button class="move-btn" onclick="moveNav(${i},1)" ${i===c.navigation.length-1?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <button class="del-btn" onclick="removeNav(${i})" style="width:30px;height:30px;border-radius:6px;color:var(--muted);"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>`).join('')||'<div style="font-size:13px;color:var(--muted);padding:12px 0;">No hay opciones de menú.</div>';
+}
+function addNavItem(){state.config.navigation=state.config.navigation||[];state.config.navigation.push({label:"Nueva opción",href:"#"});renderNavList();persist()}
+function updateNav(i,k,v){state.config.navigation[i][k]=v;clearTimeout(window._navT);window._navT=setTimeout(()=>persist(),500)}
+function removeNav(i){state.config.navigation.splice(i,1);renderNavList();persist()}
+function moveNav(i,d){const ni=i+d;const a=state.config.navigation;if(ni<0||ni>=a.length)return;[a[i],a[ni]]=[a[ni],a[i]];renderNavList();persist()}
+
+function updateHeroPreview(){
+  const url=document.getElementById('hero-image').value.trim();
+  document.getElementById('hero-img-preview').innerHTML=url?`<img src="${escapeHTML(url)}" style="width:100%;max-height:200px;object-fit:cover;border-radius:8px;border:1px solid var(--line);" onerror="this.style.display='none'">`:'';
+}
+document.getElementById('hero-image')?.addEventListener('input',updateHeroPreview);
+
+function saveContent(){
+  state.config.announcementBarVisible=document.getElementById('annBarVisible').checked;
+  state.config.hero=state.config.hero||{};
+  state.config.hero.eyebrow=document.getElementById('hero-eyebrow').value.trim();
+  state.config.hero.titleLine1=document.getElementById('hero-title1').value.trim();
+  state.config.hero.titleLine2Italic=document.getElementById('hero-title2i').value.trim();
+  state.config.hero.titleLine2Rest=document.getElementById('hero-title2r').value.trim();
+  state.config.hero.image=document.getElementById('hero-image').value.trim();
+  state.config.hero.ctaPrimary=document.getElementById('hero-cta1').value.trim();
+  state.config.hero.ctaSecondary=document.getElementById('hero-cta2').value.trim();
+  persist();
+  toast('Contenido guardado · Publica para que se vea en el sitio');
+}
+
 function exportFile(){const c=generateProductsJS();downloadFile('products.js',c,'text/javascript');state.dirty=false;persist(false);toast('Descargado')}
 function generateProductsJS(){const ts=new Date().toLocaleString('es-CO');return `/* Generado ${ts} */\n\nwindow.SITE_CONFIG = ${JSON.stringify(state.config,null,2)};\n\nwindow.COLLECTIONS = ${JSON.stringify(state.collections,null,2)};\n\nwindow.PRODUCTS = ${JSON.stringify(state.products,null,2)};\n`}
 
@@ -498,7 +634,7 @@ function escapeHTML(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;',
 function slugify(s){return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').substring(0,30)}
 function toast(msg,type='success'){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';setTimeout(()=>t.classList.remove('show'),2500)}
 
-Object.assign(window,{openProductModal,closeModal,saveProduct,deleteProduct,quickDelete,addColor,removeColor,addSize,removeSize,openCollectionModal,closeCollectionModal,saveCollection,deleteCollection,quickDeleteCollection,saveSettings,exportFile,publishToSite,savePublishPassword,exportJSON,importJSON,doLogin,logout,addImage,updateImage,removeImage,moveImage});
+Object.assign(window,{openProductModal,closeModal,saveProduct,deleteProduct,quickDelete,addColor,removeColor,addSize,removeSize,openCollectionModal,closeCollectionModal,saveCollection,deleteCollection,quickDeleteCollection,saveSettings,exportFile,publishToSite,savePublishPassword,exportJSON,importJSON,doLogin,logout,addImage,updateImage,removeImage,moveImage,addAnnouncement,updateAnn,removeAnn,moveAnn,addNavItem,updateNav,removeNav,moveNav,saveContent});
 
 init();checkPublishSetup();
 </script>
