@@ -1,0 +1,6 @@
+# Configuración de Netlify
+# Especifica dónde están las funciones serverless
+
+[build]
+  functions = "netlify/functions"
+  publish = "."

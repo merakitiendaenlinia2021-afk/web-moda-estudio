@@ -333,40 +333,49 @@
     <section class="view" id="view-export">
       <div class="topbar"><h1>Publicar cambios</h1></div>
       <div class="export-modal">
-        <div class="export-steps">
-          <div class="export-step">
-            <div class="step-num">1</div>
-            <div class="step-content">
-              <h4>Descarga el archivo actualizado</h4>
-              <p>Vamos a generar un archivo <code>products.js</code> con todos tus cambios. Es el único archivo que necesitas actualizar.</p>
-              <div style="margin-top:12px;">
-                <button class="btn btn-primary" onclick="exportFile()">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                  Descargar products.js
-                </button>
-              </div>
-            </div>
+
+        <!-- PUBLICACIÓN AUTOMÁTICA -->
+        <div style="background: linear-gradient(135deg, #0A0A0A 0%, #2C2825 100%); color: var(--bg); border-radius: 12px; padding: 32px; margin-bottom: 24px;">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+            <span style="font-size: 24px;">⚡</span>
+            <h3 style="font-family:'Archivo'; font-size:20px; text-transform:uppercase; letter-spacing:0.02em;">Publicar al sitio</h3>
           </div>
-          <div class="export-step">
-            <div class="step-num">2</div>
-            <div class="step-content">
-              <h4>Sube el archivo a Netlify</h4>
-              <p>Entra a tu sitio en <strong>app.netlify.com</strong>, ve a <strong>Deploys</strong> → arrastra el archivo descargado en la zona "Drag and drop your site folder here". Netlify lo detecta y actualiza solo el <code>products.js</code>.</p>
-              <p style="margin-top:8px;"><strong>Tip:</strong> si tienes el sitio conectado a GitHub, sube el archivo reemplazando el viejo en tu repo y el deploy es automático.</p>
-            </div>
-          </div>
-          <div class="export-step">
-            <div class="step-num">3</div>
-            <div class="step-content">
-              <h4>Verifica el sitio</h4>
-              <p>Espera 30 segundos y abre tu sitio público. Los cambios deberían estar visibles. Si no se ven, presiona <strong>Ctrl/Cmd + Shift + R</strong> para refrescar sin cache.</p>
-            </div>
+          <p style="color: rgba(245,243,238,0.75); font-size:14px; margin-bottom:24px; line-height:1.6;">
+            Con un solo clic, tus cambios estarán en vivo en ~30 segundos. Sin descargas, sin arrastrar archivos.
+          </p>
+          <button class="btn" id="publishBtn" onclick="publishToSite()" style="background: var(--bg); color: var(--ink); padding: 14px 28px; font-size: 14px;">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>
+            <span id="publishBtnText">Publicar cambios al sitio</span>
+          </button>
+          <div id="publishStatus" style="margin-top:16px; font-size:13px; color: rgba(245,243,238,0.7); display:none;"></div>
+        </div>
+
+        <!-- Configuración primera vez -->
+        <div id="publishSetup" style="display:none; background: #FFF3CD; border:1px solid #FFE69C; border-radius:12px; padding:20px; margin-bottom:24px;">
+          <h4 style="font-size:14px; margin-bottom:8px; color:#856404;">⚠️ Configura tu contraseña de publicación</h4>
+          <p style="font-size:13px; color:#856404; margin-bottom:12px;">Esta contraseña debe coincidir con la variable <code>PUBLISH_PASSWORD</code> que configuraste en Netlify.</p>
+          <div style="display:flex; gap:8px;">
+            <input type="password" id="publishPwd" placeholder="Tu contraseña de publicación" style="flex:1; padding:10px 14px; border:1px solid #FFE69C; border-radius:8px; background: white; font-size:13px;">
+            <button class="btn btn-primary" onclick="savePublishPassword()" style="padding:10px 18px;">Guardar</button>
           </div>
         </div>
 
-        <div style="margin-top:20px; background:var(--white); border:1px solid var(--line); border-radius:12px; padding:20px;">
+        <!-- OPCIÓN MANUAL (fallback) -->
+        <details style="background:var(--white); border:1px solid var(--line); border-radius:12px; padding:16px 20px; margin-bottom:20px;">
+          <summary style="font-weight:600; font-size:14px; cursor:pointer;">¿Prefieres el modo manual? (descargar y subir archivo)</summary>
+          <div style="margin-top:16px;">
+            <p style="font-size:13px; color:var(--muted); margin-bottom:16px;">Descarga el archivo <code>products.js</code> y súbelo manualmente a Netlify o GitHub.</p>
+            <button class="btn btn-secondary" onclick="exportFile()">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Descargar products.js
+            </button>
+          </div>
+        </details>
+
+        <!-- BACKUP -->
+        <div style="background:var(--white); border:1px solid var(--line); border-radius:12px; padding:20px;">
           <h4 style="font-size:14px; margin-bottom:8px;">📦 Backup completo</h4>
-          <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Descarga una copia de todos tus datos como JSON (productos, colecciones, config). Útil para guardar respaldo o migrar.</p>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">Descarga una copia de todos tus datos como JSON. Útil para respaldo o migrar.</p>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
             <button class="btn btn-secondary" onclick="exportJSON()">Exportar JSON</button>
             <button class="btn btn-secondary" onclick="document.getElementById('importJSON').click()">Importar JSON</button>
@@ -953,6 +962,86 @@
     toast('Archivo descargado. Súbelo a Netlify.', 'success');
   }
 
+  // ============== PUBLICACIÓN AUTOMÁTICA ==============
+  const PUBLISH_PWD_KEY = 'tumarca_publish_pwd';
+
+  function checkPublishSetup() {
+    const pwd = localStorage.getItem(PUBLISH_PWD_KEY);
+    document.getElementById('publishSetup').style.display = pwd ? 'none' : 'block';
+  }
+
+  function savePublishPassword() {
+    const pwd = document.getElementById('publishPwd').value.trim();
+    if (!pwd) return toast('Escribe tu contraseña', 'error');
+    localStorage.setItem(PUBLISH_PWD_KEY, pwd);
+    document.getElementById('publishPwd').value = '';
+    document.getElementById('publishSetup').style.display = 'none';
+    toast('Contraseña guardada en este dispositivo');
+  }
+
+  async function publishToSite() {
+    let pwd = localStorage.getItem(PUBLISH_PWD_KEY);
+    if (!pwd) {
+      checkPublishSetup();
+      return toast('Configura primero tu contraseña de publicación', 'error');
+    }
+
+    const btn = document.getElementById('publishBtn');
+    const btnText = document.getElementById('publishBtnText');
+    const statusEl = document.getElementById('publishStatus');
+    const originalText = btnText.textContent;
+
+    btn.disabled = true;
+    btnText.textContent = 'Publicando...';
+    statusEl.style.display = 'block';
+    statusEl.textContent = '⏳ Enviando cambios a GitHub...';
+    statusEl.style.color = 'rgba(245,243,238,0.7)';
+
+    try {
+      const response = await fetch('/.netlify/functions/publish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          password: pwd,
+          config: state.config,
+          collections: state.collections,
+          products: state.products
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.removeItem(PUBLISH_PWD_KEY);
+          checkPublishSetup();
+          throw new Error(data.error || 'Contraseña incorrecta');
+        }
+        throw new Error(data.error || `Error HTTP ${response.status}`);
+      }
+
+      // Éxito
+      state.dirty = false;
+      persist(false);
+      statusEl.textContent = '✅ ' + (data.message || 'Cambios publicados. El sitio se actualizará en ~30 segundos.');
+      statusEl.style.color = '#7FE89A';
+      btnText.textContent = '✓ Publicado';
+      toast('¡Cambios publicados!', 'success');
+      
+      setTimeout(() => {
+        btn.disabled = false;
+        btnText.textContent = originalText;
+      }, 5000);
+
+    } catch (err) {
+      statusEl.textContent = '❌ ' + err.message;
+      statusEl.style.color = '#FF9B9B';
+      btn.disabled = false;
+      btnText.textContent = originalText;
+      toast('Error al publicar: ' + err.message, 'error');
+    }
+  }
+
   function generateProductsJS() {
     const header = `/* ============================================================
    PRODUCTS.JS — Generado automáticamente por el panel admin
@@ -1035,6 +1124,8 @@
   window.quickDeleteCollection = quickDeleteCollection;
   window.saveSettings = saveSettings;
   window.exportFile = exportFile;
+  window.publishToSite = publishToSite;
+  window.savePublishPassword = savePublishPassword;
   window.exportJSON = exportJSON;
   window.importJSON = importJSON;
   window.doLogin = doLogin;
@@ -1042,6 +1133,7 @@
 
   // Init
   init();
+  checkPublishSetup();
 </script>
 
 </body>
