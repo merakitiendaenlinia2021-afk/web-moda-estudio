@@ -1,6 +1,6 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 6:55:03 p. m.
+   31/5/2026, 7:00:19 p. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
@@ -38,17 +38,15 @@ window.SITE_CONFIG = {
   ],
   "manifesto": {
     "visible": false,
-    "eyebrow": "— Nuestra filosofía",
+    "eyebrow": "",
     "title": "Vestimos a",
     "titleItalic": "quien se mueve",
-    "body1": "Desafiamos las normas convencionales de la moda. Creamos prendas con un enfoque holístico que integra estética, funcionalidad, comodidad y dinamismo.",
-    "body2": "Ya sea en un entorno urbano dinámico o conquistando nuevas aventuras, te brindamos la libertad de moverte con confianza.",
+    "body1": "",
+    "body2": "",
     "image": "https://picsum.photos/seed/manifesto/800/1000?grayscale",
     "pills": [
-      "Travel-friendly",
-      "Sport-proof",
-      "All day-wear",
-      "Made in Colombia"
+      "Made in Colombia",
+      "Precios a partir de  8 und"
     ]
   },
   "editorial": {
@@ -73,7 +71,7 @@ window.SITE_CONFIG = {
     ]
   },
   "newsletter": {
-    "visible": true,
+    "visible": false,
     "eyebrow": "— Únete",
     "title": "Sé el",
     "titleItalic": "primero",
@@ -83,57 +81,8 @@ window.SITE_CONFIG = {
     "buttonText": "Suscribirme"
   },
   "footer": {
-    "columns": [
-      {
-        "title": "Tienda",
-        "links": [
-          {
-            "label": "Todos los productos",
-            "href": "#"
-          },
-          {
-            "label": "Outlet",
-            "href": "#"
-          }
-        ]
-      },
-      {
-        "title": "Ayuda",
-        "links": [
-          {
-            "label": "Envíos",
-            "href": "#"
-          },
-          {
-            "label": "Devoluciones",
-            "href": "#"
-          },
-          {
-            "label": "Contáctanos",
-            "href": "#"
-          }
-        ]
-      },
-      {
-        "title": "Empresa",
-        "links": [
-          {
-            "label": "Nosotros",
-            "href": "#nosotros"
-          },
-          {
-            "label": "Panel admin",
-            "href": "admin.html"
-          }
-        ]
-      }
-    ],
-    "payments": [
-      "VISA",
-      "MASTER",
-      "PSE",
-      "NEQUI"
-    ],
+    "columns": [],
+    "payments": [],
     "copyrightSuffix": "Hecho en Colombia"
   },
   "socials": {
