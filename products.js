@@ -1,6 +1,6 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 1:17:10 a. m.
+   31/5/2026, 1:18:55 a. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
@@ -39,10 +39,10 @@ window.SITE_CONFIG = {
 
 window.COLLECTIONS = [
   {
-    "id": "nexis",
-    "name": "Nexis",
-    "description": "Moda y funcionalidad sin esfuerzo.",
-    "image": "https://picsum.photos/seed/nexis/800/1100?grayscale"
+    "id": "mayoristas",
+    "name": "MAYORISTAS",
+    "description": "Moda y funcionalidad",
+    "image": ""
   }
 ];
 
