@@ -1,12 +1,12 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 4:29:50 p. m.
+   31/5/2026, 4:33:39 p. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
   "brandName": "MODA ESTUDIO",
   "brandDot": ".",
-  "tagline": "Comfort-tech wear hecho en Colombia. Prendas que te brindan la libertad de moverte sin restricciones.",
+  "tagline": "",
   "announcements": [
     "Envío gratis en compras superiores a $300.000 COP",
     "Hasta 4 cuotas sin interés",
@@ -14,7 +14,7 @@ window.SITE_CONFIG = {
     "Hecho en Colombia"
   ],
   "hero": {
-    "eyebrow": "— Colección Nexis · Otoño 2026",
+    "eyebrow": "",
     "titleLine1": "Comfort",
     "titleLine2Italic": "tech",
     "titleLine2Rest": "wear",
