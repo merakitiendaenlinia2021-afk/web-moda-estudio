@@ -1,6 +1,6 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 1:21:16 a. m.
+   31/5/2026, 3:45:27 p. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
@@ -42,7 +42,7 @@ window.COLLECTIONS = [
     "id": "mayoristas",
     "name": "MAYORISTAS",
     "description": "Moda y funcionalidad",
-    "image": ""
+    "image": "https://i.ibb.co/qLC1s0zN/8fb2f803d21104e779615ee5a14987f5.jpg"
   }
 ];
 
