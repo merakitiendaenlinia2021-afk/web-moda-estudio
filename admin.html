@@ -234,6 +234,46 @@ input,textarea,select{font:inherit}
         <button class="btn btn-primary" onclick="saveContent()">Guardar menú</button>
       </div>
 
+      <!-- FEATURES BAR -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:16px;flex-wrap:wrap;">
+          <div>
+            <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">🎯 Barra de features</h3>
+            <p style="font-size:13px;color:var(--muted);">La barra que rota debajo del hero (SPORT-PROOF, ALL DAY-WEAR, etc.)</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="featVisible"><div class="switch-track"></div></label>
+        </div>
+        <div id="featList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;"></div>
+        <div class="chip-add">
+          <input type="text" id="featInput" placeholder="Nueva característica (ej: Hecho a mano)">
+          <button onclick="addFeat()">Agregar</button>
+        </div>
+        <button class="btn btn-primary" style="margin-top:16px;" onclick="saveContent()">Guardar features</button>
+      </div>
+
+      <!-- TÍTULOS DE SECCIONES -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">📑 Títulos de secciones</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Los títulos grandes de Colecciones y Productos.</p>
+        <div style="border:1px dashed var(--line);border-radius:8px;padding:14px;margin-bottom:14px;background:var(--bg);">
+          <strong style="font-size:13px;display:block;margin-bottom:10px;">📦 Sección de Colecciones</strong>
+          <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" id="sec-colEyebrow" placeholder="— Colecciones"></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Título</label><input class="form-input" id="sec-colTitle" placeholder="Diseñado para"></div>
+            <div class="form-group"><label class="form-label">Palabra itálica</label><input class="form-input" id="sec-colTitleI" placeholder="moverte"></div>
+          </div>
+        </div>
+        <div style="border:1px dashed var(--line);border-radius:8px;padding:14px;background:var(--bg);">
+          <strong style="font-size:13px;display:block;margin-bottom:10px;">🛍️ Sección de Productos</strong>
+          <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" id="sec-prodEyebrow" placeholder="— Lo más vendido"></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Título</label><input class="form-input" id="sec-prodTitle" placeholder="Más"></div>
+            <div class="form-group"><label class="form-label">Palabra itálica</label><input class="form-input" id="sec-prodTitleI" placeholder="querido"></div>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:16px;" onclick="saveContent()">Guardar títulos</button>
+      </div>
+
       <!-- NOSOTROS / MANIFESTO -->
       <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:16px;flex-wrap:wrap;">
@@ -626,6 +666,9 @@ function renderContent(){
   if(!c.editorial)c.editorial={visible:true,blocks:[]};
   if(!c.newsletter)c.newsletter={visible:true};
   if(!c.footer)c.footer={columns:[],payments:[]};
+  if(!c.features)c.features=[];
+  if(c.featuresVisible===undefined)c.featuresVisible=true;
+  if(!c.sections)c.sections={};
   
   document.getElementById('annBarVisible').checked=c.announcementBarVisible!==false;
   renderAnnList();renderNavList();
@@ -670,6 +713,18 @@ function renderContent(){
   // Footer
   renderFooterCols();renderPayments();
   document.getElementById('footer-copy').value=c.footer.copyrightSuffix||'';
+  
+  // Features bar
+  document.getElementById('featVisible').checked=c.featuresVisible!==false;
+  renderFeatList();
+  
+  // Section titles
+  document.getElementById('sec-colEyebrow').value=c.sections.collectionsEyebrow||'';
+  document.getElementById('sec-colTitle').value=c.sections.collectionsTitle||'';
+  document.getElementById('sec-colTitleI').value=c.sections.collectionsTitleItalic||'';
+  document.getElementById('sec-prodEyebrow').value=c.sections.productsEyebrow||'';
+  document.getElementById('sec-prodTitle').value=c.sections.productsTitle||'';
+  document.getElementById('sec-prodTitleI').value=c.sections.productsTitleItalic||'';
 }
 
 function renderAnnList(){
@@ -761,6 +816,17 @@ function addPayment(){const v=document.getElementById('paymentInput').value.trim
 function removePayment(i){state.config.footer.payments.splice(i,1);renderPayments();persist()}
 document.getElementById('paymentInput')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addPayment()}});
 
+// FEATURES BAR
+function renderFeatList(){
+  const c=state.config;
+  document.getElementById('featList').innerHTML=(c.features||[]).map((f,i)=>`<div style="display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;"><input style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(f)}" oninput="updateFeat(${i},this.value)"><button onclick="moveFeat(${i},-1)" ${i===0?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">↑</button><button onclick="moveFeat(${i},1)" ${i===c.features.length-1?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">↓</button><button onclick="removeFeat(${i})" style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">✕</button></div>`).join('')||'<div style="font-size:13px;color:var(--muted);padding:12px 0;">Sin características.</div>';
+}
+function addFeat(){const v=document.getElementById('featInput').value.trim();if(!v)return toast('Escribe algo','error');state.config.features=state.config.features||[];state.config.features.push(v);document.getElementById('featInput').value='';renderFeatList();persist();toast('Agregada')}
+function updateFeat(i,v){state.config.features[i]=v;clearTimeout(window._featT);window._featT=setTimeout(()=>persist(),500)}
+function removeFeat(i){state.config.features.splice(i,1);renderFeatList();persist()}
+function moveFeat(i,d){const ni=i+d;const a=state.config.features;if(ni<0||ni>=a.length)return;[a[i],a[ni]]=[a[ni],a[i]];renderFeatList();persist()}
+document.getElementById('featInput')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addFeat()}});
+
 function saveContent(){
   const c=state.config;
   c.announcementBarVisible=document.getElementById('annBarVisible').checked;
@@ -793,6 +859,14 @@ function saveContent(){
   c.newsletter.buttonText=document.getElementById('nl-btn').value.trim();
   c.footer=c.footer||{};
   c.footer.copyrightSuffix=document.getElementById('footer-copy').value.trim();
+  c.featuresVisible=document.getElementById('featVisible').checked;
+  c.sections=c.sections||{};
+  c.sections.collectionsEyebrow=document.getElementById('sec-colEyebrow').value.trim();
+  c.sections.collectionsTitle=document.getElementById('sec-colTitle').value.trim();
+  c.sections.collectionsTitleItalic=document.getElementById('sec-colTitleI').value.trim();
+  c.sections.productsEyebrow=document.getElementById('sec-prodEyebrow').value.trim();
+  c.sections.productsTitle=document.getElementById('sec-prodTitle').value.trim();
+  c.sections.productsTitleItalic=document.getElementById('sec-prodTitleI').value.trim();
   persist();
   toast('Guardado · Publica para que se vea en el sitio');
 }
@@ -827,7 +901,7 @@ function escapeHTML(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;',
 function slugify(s){return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').substring(0,30)}
 function toast(msg,type='success'){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';setTimeout(()=>t.classList.remove('show'),2500)}
 
-Object.assign(window,{openProductModal,closeModal,saveProduct,deleteProduct,quickDelete,addColor,removeColor,addSize,removeSize,openCollectionModal,closeCollectionModal,saveCollection,deleteCollection,quickDeleteCollection,saveSettings,exportFile,publishToSite,savePublishPassword,exportJSON,importJSON,doLogin,logout,addImage,updateImage,removeImage,moveImage,addAnnouncement,updateAnn,removeAnn,moveAnn,addNavItem,updateNav,removeNav,moveNav,saveContent,addPill,removePill,addEdBlock,updateEdBlock,removeEdBlock,addFooterColumn,removeFooterColumn,updateFooterColTitle,addFooterLink,removeFooterLink,updateFooterLink,addPayment,removePayment});
+Object.assign(window,{openProductModal,closeModal,saveProduct,deleteProduct,quickDelete,addColor,removeColor,addSize,removeSize,openCollectionModal,closeCollectionModal,saveCollection,deleteCollection,quickDeleteCollection,saveSettings,exportFile,publishToSite,savePublishPassword,exportJSON,importJSON,doLogin,logout,addImage,updateImage,removeImage,moveImage,addAnnouncement,updateAnn,removeAnn,moveAnn,addNavItem,updateNav,removeNav,moveNav,saveContent,addPill,removePill,addEdBlock,updateEdBlock,removeEdBlock,addFooterColumn,removeFooterColumn,updateFooterColTitle,addFooterLink,removeFooterLink,updateFooterLink,addPayment,removePayment,addFeat,updateFeat,removeFeat,moveFeat});
 
 init();checkPublishSetup();
 </script>
