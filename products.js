@@ -1,6 +1,6 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 8:33:28 p. m.
+   31/5/2026, 8:34:15 p. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
@@ -90,7 +90,7 @@ window.SITE_CONFIG = {
     "tiktok": "#",
     "linkedin": "#"
   },
-  "featuresVisible": true,
+  "featuresVisible": false,
   "sections": {
     "collectionsEyebrow": "",
     "collectionsTitle": "",
