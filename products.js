@@ -1,6 +1,6 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 6:50:08 p. m.
+   31/5/2026, 6:55:03 p. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
@@ -132,8 +132,7 @@ window.SITE_CONFIG = {
       "VISA",
       "MASTER",
       "PSE",
-      "NEQUI",
-      "ADDI"
+      "NEQUI"
     ],
     "copyrightSuffix": "Hecho en Colombia"
   },
@@ -146,22 +145,10 @@ window.SITE_CONFIG = {
 
 window.COLLECTIONS = [
   {
-    "id": "nexis",
-    "name": "Nexis",
-    "description": "Moda y funcionalidad sin esfuerzo.",
-    "image": "https://picsum.photos/seed/nexis/800/1100?grayscale"
-  },
-  {
-    "id": "horizon",
-    "name": "Horizon",
-    "description": "Libertad de movimiento sin restricciones.",
-    "image": "https://picsum.photos/seed/horizon/800/1100?grayscale"
-  },
-  {
-    "id": "ascend",
-    "name": "Ascend",
-    "description": "Tecnología textil para nuevos horizontes.",
-    "image": "https://picsum.photos/seed/ascend/800/1100?grayscale"
+    "id": "mayoristas",
+    "name": "MAYORISTAS",
+    "description": "",
+    "image": "https://i.ibb.co/qLC1s0zN/8fb2f803d21104e779615ee5a14987f5.jpg"
   }
 ];
 
