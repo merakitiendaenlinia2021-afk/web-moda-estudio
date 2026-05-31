@@ -1,16 +1,14 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 6:46:56 p. m.
+   31/5/2026, 6:47:21 p. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
   "brandName": "MODA ESTUDIO",
   "brandDot": ".",
   "tagline": "Comfort-tech wear hecho en Colombia.",
-  "announcementBarVisible": true,
-  "announcements": [
-    "Envío gratis en compras superiores a $300.000 COP"
-  ],
+  "announcementBarVisible": false,
+  "announcements": [],
   "navigation": [
     {
       "label": "Productos",
