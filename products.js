@@ -1,6 +1,6 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 3:45:27 p. m.
+   31/5/2026, 3:53:55 p. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
@@ -46,28 +46,4 @@ window.COLLECTIONS = [
   }
 ];
 
-window.PRODUCTS = [
-  {
-    "id": "drift",
-    "name": ".",
-    "price": 429900,
-    "oldPrice": null,
-    "collection": "horizon",
-    "tag": "bestseller",
-    "image": "https://picsum.photos/seed/p4/600/750?grayscale",
-    "imageHover": "https://picsum.photos/seed/p4b/600/750?grayscale",
-    "colors": [
-      "#0A0A0A",
-      "#5C5045",
-      "#2B3329"
-    ],
-    "sizes": [
-      "28",
-      "30",
-      "32",
-      "34",
-      "36"
-    ],
-    "active": true
-  }
-];
+window.PRODUCTS = [];
