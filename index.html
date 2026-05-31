@@ -271,29 +271,34 @@ ul{list-style:none}
 <section class="section manifesto" id="nosotros">
   <div class="container">
     <div class="manifesto-grid">
-      <div class="manifesto-image reveal"><img src="https://picsum.photos/seed/manifesto/800/1000?grayscale" alt=""></div>
+      <div class="manifesto-image reveal"><img id="manifestoImg" src="" alt=""></div>
       <div class="manifesto-text reveal">
-        <div class="eyebrow">— Nuestra filosofía</div>
-        <h2 class="h-display manifesto-title">Vestimos a <span class="italic">quien se mueve</span></h2>
-        <p class="manifesto-body">Desafiamos las normas convencionales de la moda. Creamos prendas con un enfoque holístico que integra estética, funcionalidad, comodidad y dinamismo.</p>
-        <div class="manifesto-pills">
-          <span class="pill">Travel-friendly</span><span class="pill">Sport-proof</span><span class="pill">All day-wear</span><span class="pill">Made in Colombia</span>
-        </div>
+        <div class="eyebrow" id="manifestoEyebrow"></div>
+        <h2 class="h-display manifesto-title" id="manifestoTitle"></h2>
+        <p class="manifesto-body" id="manifestoBody1"></p>
+        <p class="manifesto-body" id="manifestoBody2"></p>
+        <div class="manifesto-pills" id="manifestoPills"></div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section newsletter">
+<section class="section" id="editorialSection">
+  <div class="container">
+    <div class="editorial-grid" id="editorialGrid"></div>
+  </div>
+</section>
+
+<section class="section newsletter" id="newsletterSection">
   <div class="container">
     <div class="newsletter-inner reveal">
-      <div class="eyebrow">— Únete</div>
-      <h2 class="h-display newsletter-title" style="margin-top:16px;">Sé el <span class="italic">primero</span> en saber</h2>
-      <p class="newsletter-sub">Nuevos lanzamientos y acceso anticipado a colecciones limitadas.</p>
+      <div class="eyebrow" id="newsEyebrow"></div>
+      <h2 class="h-display newsletter-title" id="newsTitle" style="margin-top:16px;"></h2>
+      <p class="newsletter-sub" id="newsSub"></p>
       <form class="newsletter-form" name="newsletter" method="POST" data-netlify="true" onsubmit="event.preventDefault();alert('¡Gracias por suscribirte!');">
         <input type="hidden" name="form-name" value="newsletter">
-        <input type="email" name="email" placeholder="Tu correo electrónico" required>
-        <button type="submit">Suscribirme</button>
+        <input type="email" name="email" id="newsInput" required>
+        <button type="submit" id="newsBtn"></button>
       </form>
     </div>
   </div>
@@ -307,13 +312,11 @@ ul{list-style:none}
         <p id="footerTagline"></p>
         <div class="socials" id="footerSocials"></div>
       </div>
-      <div class="footer-col"><h4>Tienda</h4><ul><li><a href="#">Todos los productos</a></li><li><a href="#">Outlet</a></li></ul></div>
-      <div class="footer-col"><h4>Ayuda</h4><ul><li><a href="#">Envíos</a></li><li><a href="#">Devoluciones</a></li><li><a href="#">Contáctanos</a></li></ul></div>
-      <div class="footer-col"><h4>Empresa</h4><ul><li><a href="#">Nosotros</a></li><li><a href="admin.html">Panel admin</a></li></ul></div>
+      <div id="footerColumns" style="display:contents;"></div>
     </div>
     <div class="footer-bottom">
       <div id="footerCopy"></div>
-      <div class="payments"><span class="pay-badge">VISA</span><span class="pay-badge">MASTER</span><span class="pay-badge">PSE</span><span class="pay-badge">NEQUI</span><span class="pay-badge">ADDI</span></div>
+      <div class="payments" id="footerPayments"></div>
     </div>
   </div>
 </footer>
@@ -346,7 +349,6 @@ const brand=`${escapeHTML(cfg.brandName||'MODA ESTUDIO')}<span class="dot">${esc
 document.getElementById('brandLogo').innerHTML=brand;
 document.getElementById('footerLogo').innerHTML=brand;
 document.getElementById('footerTagline').textContent=cfg.tagline||'';
-document.getElementById('footerCopy').textContent=`© ${new Date().getFullYear()} ${cfg.brandName||'MODA ESTUDIO'} · Hecho en Colombia`;
 document.title=`${cfg.brandName||'MODA ESTUDIO'}`;
 
 const ann=cfg.announcements||[];
@@ -375,6 +377,57 @@ const socialIcons={
   linkedin:'<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>'
 };
 document.getElementById('footerSocials').innerHTML=Object.keys(socials).map(k=>`<a href="${escapeHTML(socials[k])}" class="social-btn" target="_blank" rel="noopener">${socialIcons[k]||''}</a>`).join('');
+
+// MANIFESTO
+const m=cfg.manifesto||{};
+if(m.visible===false){document.getElementById('nosotros').style.display='none'}
+else{
+  document.getElementById('manifestoImg').src=m.image||'';
+  document.getElementById('manifestoEyebrow').textContent=m.eyebrow||'— Nuestra filosofía';
+  document.getElementById('manifestoTitle').innerHTML=`${escapeHTML(m.title||'')} <span class="italic">${escapeHTML(m.titleItalic||'')}</span>`;
+  document.getElementById('manifestoBody1').textContent=m.body1||'';
+  document.getElementById('manifestoBody2').textContent=m.body2||'';
+  if(!m.body2)document.getElementById('manifestoBody2').style.display='none';
+  document.getElementById('manifestoPills').innerHTML=(m.pills||[]).map(p=>`<span class="pill">${escapeHTML(p)}</span>`).join('');
+}
+
+// EDITORIAL
+const ed=cfg.editorial||{};
+if(ed.visible===false||!(ed.blocks||[]).length){document.getElementById('editorialSection').style.display='none'}
+else{
+  const blocks=(ed.blocks||[]).filter(b=>b.visible!==false);
+  document.getElementById('editorialGrid').innerHTML=blocks.map(b=>`
+    <a href="#" class="editorial-card reveal">
+      <img src="${escapeHTML(b.image||'')}" alt="${escapeHTML(b.title||'')}">
+      <div class="editorial-content">
+        <h3 class="h-display editorial-title">${escapeHTML(b.title||'')} ${b.italic?`<span class="italic">${escapeHTML(b.italic)}</span>`:''}</h3>
+        <p class="editorial-sub">${escapeHTML(b.subtitle||'')}</p>
+        <span class="section-link" style="color:var(--bg);border-color:var(--bg);">${escapeHTML(b.linkText||'Ver más')} <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+      </div>
+    </a>`).join('');
+}
+
+// NEWSLETTER
+const nl=cfg.newsletter||{};
+if(nl.visible===false){document.getElementById('newsletterSection').style.display='none'}
+else{
+  document.getElementById('newsEyebrow').textContent=nl.eyebrow||'— Únete';
+  document.getElementById('newsTitle').innerHTML=`${escapeHTML(nl.title||'')} <span class="italic">${escapeHTML(nl.titleItalic||'')}</span> ${escapeHTML(nl.titleRest||'')}`;
+  document.getElementById('newsSub').textContent=nl.subtitle||'';
+  document.getElementById('newsInput').placeholder=nl.placeholder||'Tu correo electrónico';
+  document.getElementById('newsBtn').textContent=nl.buttonText||'Suscribirme';
+}
+
+// FOOTER
+const ft=cfg.footer||{};
+document.getElementById('footerColumns').innerHTML=(ft.columns||[]).map(c=>`
+  <div class="footer-col">
+    <h4>${escapeHTML(c.title||'')}</h4>
+    <ul>${(c.links||[]).map(l=>`<li><a href="${escapeHTML(l.href||'#')}">${escapeHTML(l.label||'')}</a></li>`).join('')}</ul>
+  </div>`).join('');
+document.getElementById('footerPayments').innerHTML=(ft.payments||[]).map(p=>`<span class="pay-badge">${escapeHTML(p)}</span>`).join('');
+const copySuffix=ft.copyrightSuffix||'Hecho en Colombia';
+document.getElementById('footerCopy').textContent=`© ${new Date().getFullYear()} ${cfg.brandName||'MODA ESTUDIO'} · ${copySuffix}`;
 
 // Collections
 const collections=window.COLLECTIONS||[];

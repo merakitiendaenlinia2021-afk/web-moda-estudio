@@ -233,6 +233,91 @@ input,textarea,select{font:inherit}
         </div>
         <button class="btn btn-primary" onclick="saveContent()">Guardar menú</button>
       </div>
+
+      <!-- NOSOTROS / MANIFESTO -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:16px;flex-wrap:wrap;">
+          <div>
+            <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">💬 Sección Nosotros</h3>
+            <p style="font-size:13px;color:var(--muted);">La sección oscura con la imagen y filosofía de la marca.</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="mfVisible"><div class="switch-track"></div></label>
+        </div>
+        <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" id="mf-eyebrow"></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Primera parte del título</label><input class="form-input" id="mf-title"></div>
+          <div class="form-group"><label class="form-label">Parte itálica</label><input class="form-input" id="mf-titleItalic"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Primer párrafo</label><textarea class="form-textarea" id="mf-body1"></textarea></div>
+        <div class="form-group"><label class="form-label">Segundo párrafo <span class="hint">(opcional)</span></label><textarea class="form-textarea" id="mf-body2"></textarea></div>
+        <div class="form-group">
+          <label class="form-label">Imagen <span class="hint">(URL)</span></label>
+          <input class="form-input" id="mf-image">
+          <div id="mf-preview" style="margin-top:12px;"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Características (pills)</label>
+          <div class="chips" id="mfPills"></div>
+          <div class="chip-add"><input type="text" id="mfPillInput" placeholder="Ej: Travel-friendly"><button onclick="addPill()">Agregar</button></div>
+        </div>
+        <button class="btn btn-primary" onclick="saveContent()">Guardar sección</button>
+      </div>
+
+      <!-- EDITORIALES -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:16px;flex-wrap:wrap;">
+          <div>
+            <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">📰 Bloques editoriales</h3>
+            <p style="font-size:13px;color:var(--muted);">Los 2 bloques grandes con imagen (Lookbook, Tiendas, etc.).</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="edVisible"><div class="switch-track"></div></label>
+        </div>
+        <div id="edBlocksList"></div>
+        <button class="btn btn-secondary" onclick="addEdBlock()" style="margin-top:8px;">+ Agregar bloque</button>
+        <div style="margin-top:16px;"><button class="btn btn-primary" onclick="saveContent()">Guardar editoriales</button></div>
+      </div>
+
+      <!-- NEWSLETTER -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:16px;flex-wrap:wrap;">
+          <div>
+            <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">📧 Newsletter</h3>
+            <p style="font-size:13px;color:var(--muted);">La sección de suscripción al correo.</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="nlVisible"><div class="switch-track"></div></label>
+        </div>
+        <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" id="nl-eyebrow"></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Primera parte</label><input class="form-input" id="nl-title"></div>
+          <div class="form-group"><label class="form-label">Itálica</label><input class="form-input" id="nl-titleI"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Resto del título</label><input class="form-input" id="nl-titleR"></div>
+        <div class="form-group"><label class="form-label">Subtítulo</label><textarea class="form-textarea" id="nl-sub"></textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Placeholder del input</label><input class="form-input" id="nl-placeholder"></div>
+          <div class="form-group"><label class="form-label">Texto del botón</label><input class="form-input" id="nl-btn"></div>
+        </div>
+        <button class="btn btn-primary" onclick="saveContent()">Guardar newsletter</button>
+      </div>
+
+      <!-- FOOTER -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">🦶 Footer</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Las columnas con enlaces al final del sitio.</p>
+        <div id="footerColumnsAdmin"></div>
+        <button class="btn btn-secondary" onclick="addFooterColumn()" style="margin-top:8px;">+ Agregar columna</button>
+        <hr style="border:none;border-top:1px solid var(--line);margin:24px 0;">
+        <div class="form-group">
+          <label class="form-label">Métodos de pago (badges)</label>
+          <div class="chips" id="paymentsList"></div>
+          <div class="chip-add"><input type="text" id="paymentInput" placeholder="Ej: VISA, NEQUI, BANCOLOMBIA"><button onclick="addPayment()">Agregar</button></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Texto del copyright <span class="hint">(después del año y nombre)</span></label>
+          <input class="form-input" id="footer-copy" placeholder="Hecho en Colombia">
+        </div>
+        <button class="btn btn-primary" onclick="saveContent()">Guardar footer</button>
+      </div>
     </section>
 
     <section class="view" id="view-settings">
@@ -537,10 +622,13 @@ function renderContent(){
   if(c.announcementBarVisible===undefined)c.announcementBarVisible=true;
   if(!c.navigation)c.navigation=[{label:"Productos",href:"#productos"},{label:"Colecciones",href:"#colecciones"},{label:"Nosotros",href:"#nosotros"},{label:"Tiendas",href:"#tiendas"}];
   if(!c.hero)c.hero={};
+  if(!c.manifesto)c.manifesto={visible:true,pills:[]};
+  if(!c.editorial)c.editorial={visible:true,blocks:[]};
+  if(!c.newsletter)c.newsletter={visible:true};
+  if(!c.footer)c.footer={columns:[],payments:[]};
   
   document.getElementById('annBarVisible').checked=c.announcementBarVisible!==false;
-  renderAnnList();
-  renderNavList();
+  renderAnnList();renderNavList();
   
   const h=c.hero;
   document.getElementById('hero-eyebrow').value=h.eyebrow||'';
@@ -551,18 +639,44 @@ function renderContent(){
   document.getElementById('hero-cta1').value=h.ctaPrimary||'';
   document.getElementById('hero-cta2').value=h.ctaSecondary||'';
   updateHeroPreview();
+  
+  // Manifesto
+  const m=c.manifesto;
+  document.getElementById('mfVisible').checked=m.visible!==false;
+  document.getElementById('mf-eyebrow').value=m.eyebrow||'';
+  document.getElementById('mf-title').value=m.title||'';
+  document.getElementById('mf-titleItalic').value=m.titleItalic||'';
+  document.getElementById('mf-body1').value=m.body1||'';
+  document.getElementById('mf-body2').value=m.body2||'';
+  document.getElementById('mf-image').value=m.image||'';
+  updateMfPreview();
+  renderPills();
+  
+  // Editorial
+  document.getElementById('edVisible').checked=c.editorial.visible!==false;
+  renderEdBlocks();
+  
+  // Newsletter
+  const nl=c.newsletter;
+  document.getElementById('nlVisible').checked=nl.visible!==false;
+  document.getElementById('nl-eyebrow').value=nl.eyebrow||'';
+  document.getElementById('nl-title').value=nl.title||'';
+  document.getElementById('nl-titleI').value=nl.titleItalic||'';
+  document.getElementById('nl-titleR').value=nl.titleRest||'';
+  document.getElementById('nl-sub').value=nl.subtitle||'';
+  document.getElementById('nl-placeholder').value=nl.placeholder||'';
+  document.getElementById('nl-btn').value=nl.buttonText||'';
+  
+  // Footer
+  renderFooterCols();renderPayments();
+  document.getElementById('footer-copy').value=c.footer.copyrightSuffix||'';
 }
+
 function renderAnnList(){
   const c=state.config;
-  document.getElementById('annList').innerHTML=(c.announcements||[]).map((a,i)=>`
-    <div style="display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;">
-      <input class="url-input" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(a)}" oninput="updateAnn(${i},this.value)">
-      <button class="move-btn" onclick="moveAnn(${i},-1)" ${i===0?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button>
-      <button class="move-btn" onclick="moveAnn(${i},1)" ${i===c.announcements.length-1?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <button class="del-btn" onclick="removeAnn(${i})" style="width:30px;height:30px;border-radius:6px;color:var(--muted);"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    </div>`).join('')||'<div style="font-size:13px;color:var(--muted);padding:12px 0;">No hay mensajes. Agrega el primero abajo.</div>';
+  document.getElementById('annList').innerHTML=(c.announcements||[]).map((a,i)=>`<div style="display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;"><input style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(a)}" oninput="updateAnn(${i},this.value)"><button onclick="moveAnn(${i},-1)" ${i===0?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">↑</button><button onclick="moveAnn(${i},1)" ${i===c.announcements.length-1?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">↓</button><button onclick="removeAnn(${i})" style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">✕</button></div>`).join('')||'<div style="font-size:13px;color:var(--muted);padding:12px 0;">No hay mensajes.</div>';
 }
-function addAnnouncement(){const v=document.getElementById('annInput').value.trim();if(!v)return toast('Escribe el mensaje','error');state.config.announcements=state.config.announcements||[];state.config.announcements.push(v);document.getElementById('annInput').value='';renderAnnList();persist();toast('Mensaje agregado')}
+function addAnnouncement(){const v=document.getElementById('annInput').value.trim();if(!v)return toast('Escribe el mensaje','error');state.config.announcements=state.config.announcements||[];state.config.announcements.push(v);document.getElementById('annInput').value='';renderAnnList();persist();toast('Agregado')}
 function updateAnn(i,v){state.config.announcements[i]=v;clearTimeout(window._annT);window._annT=setTimeout(()=>persist(),500)}
 function removeAnn(i){state.config.announcements.splice(i,1);renderAnnList();persist()}
 function moveAnn(i,d){const ni=i+d;const a=state.config.announcements;if(ni<0||ni>=a.length)return;[a[i],a[ni]]=[a[ni],a[i]];renderAnnList();persist()}
@@ -570,38 +684,117 @@ document.getElementById('annInput')?.addEventListener('keydown',e=>{if(e.key==='
 
 function renderNavList(){
   const c=state.config;
-  document.getElementById('navList').innerHTML=(c.navigation||[]).map((n,i)=>`
-    <div style="display:grid;grid-template-columns:1fr 1fr auto auto auto;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;">
-      <input placeholder="Etiqueta (ej: Productos)" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(n.label)}" oninput="updateNav(${i},'label',this.value)">
-      <input placeholder="Enlace (ej: #productos)" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(n.href)}" oninput="updateNav(${i},'href',this.value)">
-      <button class="move-btn" onclick="moveNav(${i},-1)" ${i===0?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button>
-      <button class="move-btn" onclick="moveNav(${i},1)" ${i===c.navigation.length-1?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
-      <button class="del-btn" onclick="removeNav(${i})" style="width:30px;height:30px;border-radius:6px;color:var(--muted);"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    </div>`).join('')||'<div style="font-size:13px;color:var(--muted);padding:12px 0;">No hay opciones de menú.</div>';
+  document.getElementById('navList').innerHTML=(c.navigation||[]).map((n,i)=>`<div style="display:grid;grid-template-columns:1fr 1fr auto auto auto;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;"><input placeholder="Etiqueta" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(n.label)}" oninput="updateNav(${i},'label',this.value)"><input placeholder="Enlace" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(n.href)}" oninput="updateNav(${i},'href',this.value)"><button onclick="moveNav(${i},-1)" ${i===0?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">↑</button><button onclick="moveNav(${i},1)" ${i===c.navigation.length-1?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">↓</button><button onclick="removeNav(${i})" style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">✕</button></div>`).join('')||'<div style="font-size:13px;color:var(--muted);padding:12px 0;">No hay opciones de menú.</div>';
 }
 function addNavItem(){state.config.navigation=state.config.navigation||[];state.config.navigation.push({label:"Nueva opción",href:"#"});renderNavList();persist()}
 function updateNav(i,k,v){state.config.navigation[i][k]=v;clearTimeout(window._navT);window._navT=setTimeout(()=>persist(),500)}
 function removeNav(i){state.config.navigation.splice(i,1);renderNavList();persist()}
 function moveNav(i,d){const ni=i+d;const a=state.config.navigation;if(ni<0||ni>=a.length)return;[a[i],a[ni]]=[a[ni],a[i]];renderNavList();persist()}
 
-function updateHeroPreview(){
-  const url=document.getElementById('hero-image').value.trim();
-  document.getElementById('hero-img-preview').innerHTML=url?`<img src="${escapeHTML(url)}" style="width:100%;max-height:200px;object-fit:cover;border-radius:8px;border:1px solid var(--line);" onerror="this.style.display='none'">`:'';
-}
+function updateHeroPreview(){const url=document.getElementById('hero-image').value.trim();document.getElementById('hero-img-preview').innerHTML=url?`<img src="${escapeHTML(url)}" style="width:100%;max-height:200px;object-fit:cover;border-radius:8px;border:1px solid var(--line);" onerror="this.style.display='none'">`:''}
 document.getElementById('hero-image')?.addEventListener('input',updateHeroPreview);
 
+// MANIFESTO pills
+function renderPills(){
+  const pills=(state.config.manifesto.pills||[]);
+  document.getElementById('mfPills').innerHTML=pills.map((p,i)=>`<div class="chip">${escapeHTML(p)}<button onclick="removePill(${i})">✕</button></div>`).join('')||'<span style="font-size:12px;color:var(--muted);">Sin pills</span>';
+}
+function addPill(){const v=document.getElementById('mfPillInput').value.trim();if(!v)return;state.config.manifesto.pills=state.config.manifesto.pills||[];if(state.config.manifesto.pills.includes(v))return toast('Ya está','error');state.config.manifesto.pills.push(v);document.getElementById('mfPillInput').value='';renderPills();persist()}
+function removePill(i){state.config.manifesto.pills.splice(i,1);renderPills();persist()}
+document.getElementById('mfPillInput')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addPill()}});
+function updateMfPreview(){const url=document.getElementById('mf-image').value.trim();document.getElementById('mf-preview').innerHTML=url?`<img src="${escapeHTML(url)}" style="width:160px;aspect-ratio:4/5;object-fit:cover;border-radius:8px;border:1px solid var(--line);" onerror="this.style.display='none'">`:''}
+document.getElementById('mf-image')?.addEventListener('input',updateMfPreview);
+
+// EDITORIAL BLOCKS
+function renderEdBlocks(){
+  const blocks=state.config.editorial.blocks||[];
+  document.getElementById('edBlocksList').innerHTML=blocks.map((b,i)=>`
+    <div style="background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <strong style="font-size:13px;">Bloque ${i+1}</strong>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <label class="switch" style="gap:6px;"><input type="checkbox" ${b.visible!==false?'checked':''} onchange="updateEdBlock(${i},'visible',this.checked)"><div class="switch-track"></div></label>
+          <button onclick="removeEdBlock(${i})" style="color:var(--danger);background:transparent;border:none;padding:4px 8px;cursor:pointer;">Eliminar</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+        <input placeholder="Título (Lookbook)" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(b.title||'')}" oninput="updateEdBlock(${i},'title',this.value)">
+        <input placeholder="Itálica (SS26)" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(b.italic||'')}" oninput="updateEdBlock(${i},'italic',this.value)">
+      </div>
+      <input placeholder="Subtítulo" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;width:100%;margin-bottom:8px;" value="${escapeHTML(b.subtitle||'')}" oninput="updateEdBlock(${i},'subtitle',this.value)">
+      <input placeholder="URL imagen" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;width:100%;margin-bottom:8px;" value="${escapeHTML(b.image||'')}" oninput="updateEdBlock(${i},'image',this.value)">
+      <input placeholder="Texto del enlace (Explorar)" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;width:100%;" value="${escapeHTML(b.linkText||'')}" oninput="updateEdBlock(${i},'linkText',this.value)">
+    </div>`).join('')||'<div style="font-size:13px;color:var(--muted);padding:12px 0;">No hay bloques editoriales.</div>';
+}
+function addEdBlock(){state.config.editorial.blocks=state.config.editorial.blocks||[];state.config.editorial.blocks.push({title:"Nuevo",italic:"",subtitle:"",image:"",linkText:"Ver más",visible:true});renderEdBlocks();persist()}
+function updateEdBlock(i,k,v){state.config.editorial.blocks[i][k]=v;clearTimeout(window._edT);window._edT=setTimeout(()=>persist(),500)}
+function removeEdBlock(i){if(!confirm('¿Eliminar este bloque?'))return;state.config.editorial.blocks.splice(i,1);renderEdBlocks();persist()}
+
+// FOOTER columns
+function renderFooterCols(){
+  const cols=state.config.footer.columns||[];
+  document.getElementById('footerColumnsAdmin').innerHTML=cols.map((c,i)=>`
+    <div style="background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;">
+        <input placeholder="Título columna" style="flex:1;padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;font-weight:600;outline:none;background:white;" value="${escapeHTML(c.title||'')}" oninput="updateFooterColTitle(${i},this.value)">
+        <button onclick="removeFooterColumn(${i})" style="color:var(--danger);background:transparent;border:none;padding:4px 8px;cursor:pointer;">Eliminar</button>
+      </div>
+      <div id="footerCol-${i}-links">
+        ${(c.links||[]).map((l,j)=>`<div style="display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-bottom:6px;"><input placeholder="Etiqueta" style="padding:6px 10px;border:1px solid var(--line);border-radius:6px;font-size:12px;outline:none;background:white;" value="${escapeHTML(l.label||'')}" oninput="updateFooterLink(${i},${j},'label',this.value)"><input placeholder="Enlace" style="padding:6px 10px;border:1px solid var(--line);border-radius:6px;font-size:12px;outline:none;background:white;" value="${escapeHTML(l.href||'')}" oninput="updateFooterLink(${i},${j},'href',this.value)"><button onclick="removeFooterLink(${i},${j})" style="color:var(--muted);background:transparent;border:none;padding:4px 8px;cursor:pointer;">✕</button></div>`).join('')}
+      </div>
+      <button onclick="addFooterLink(${i})" style="margin-top:6px;font-size:12px;padding:6px 12px;border-radius:6px;background:white;border:1px solid var(--line);cursor:pointer;">+ Agregar enlace</button>
+    </div>`).join('')||'<div style="font-size:13px;color:var(--muted);padding:12px 0;">No hay columnas.</div>';
+}
+function addFooterColumn(){state.config.footer.columns=state.config.footer.columns||[];state.config.footer.columns.push({title:"Nueva",links:[]});renderFooterCols();persist()}
+function removeFooterColumn(i){if(!confirm('¿Eliminar columna?'))return;state.config.footer.columns.splice(i,1);renderFooterCols();persist()}
+function updateFooterColTitle(i,v){state.config.footer.columns[i].title=v;clearTimeout(window._fcT);window._fcT=setTimeout(()=>persist(),500)}
+function addFooterLink(i){state.config.footer.columns[i].links=state.config.footer.columns[i].links||[];state.config.footer.columns[i].links.push({label:"Nuevo",href:"#"});renderFooterCols();persist()}
+function removeFooterLink(ci,li){state.config.footer.columns[ci].links.splice(li,1);renderFooterCols();persist()}
+function updateFooterLink(ci,li,k,v){state.config.footer.columns[ci].links[li][k]=v;clearTimeout(window._flT);window._flT=setTimeout(()=>persist(),500)}
+
+// Payments
+function renderPayments(){
+  const pays=state.config.footer.payments||[];
+  document.getElementById('paymentsList').innerHTML=pays.map((p,i)=>`<div class="chip">${escapeHTML(p)}<button onclick="removePayment(${i})">✕</button></div>`).join('')||'<span style="font-size:12px;color:var(--muted);">Sin métodos</span>';
+}
+function addPayment(){const v=document.getElementById('paymentInput').value.trim();if(!v)return;state.config.footer.payments=state.config.footer.payments||[];if(state.config.footer.payments.includes(v))return toast('Ya está','error');state.config.footer.payments.push(v.toUpperCase());document.getElementById('paymentInput').value='';renderPayments();persist()}
+function removePayment(i){state.config.footer.payments.splice(i,1);renderPayments();persist()}
+document.getElementById('paymentInput')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addPayment()}});
+
 function saveContent(){
-  state.config.announcementBarVisible=document.getElementById('annBarVisible').checked;
-  state.config.hero=state.config.hero||{};
-  state.config.hero.eyebrow=document.getElementById('hero-eyebrow').value.trim();
-  state.config.hero.titleLine1=document.getElementById('hero-title1').value.trim();
-  state.config.hero.titleLine2Italic=document.getElementById('hero-title2i').value.trim();
-  state.config.hero.titleLine2Rest=document.getElementById('hero-title2r').value.trim();
-  state.config.hero.image=document.getElementById('hero-image').value.trim();
-  state.config.hero.ctaPrimary=document.getElementById('hero-cta1').value.trim();
-  state.config.hero.ctaSecondary=document.getElementById('hero-cta2').value.trim();
+  const c=state.config;
+  c.announcementBarVisible=document.getElementById('annBarVisible').checked;
+  c.hero=c.hero||{};
+  c.hero.eyebrow=document.getElementById('hero-eyebrow').value.trim();
+  c.hero.titleLine1=document.getElementById('hero-title1').value.trim();
+  c.hero.titleLine2Italic=document.getElementById('hero-title2i').value.trim();
+  c.hero.titleLine2Rest=document.getElementById('hero-title2r').value.trim();
+  c.hero.image=document.getElementById('hero-image').value.trim();
+  c.hero.ctaPrimary=document.getElementById('hero-cta1').value.trim();
+  c.hero.ctaSecondary=document.getElementById('hero-cta2').value.trim();
+  c.manifesto=c.manifesto||{};
+  c.manifesto.visible=document.getElementById('mfVisible').checked;
+  c.manifesto.eyebrow=document.getElementById('mf-eyebrow').value.trim();
+  c.manifesto.title=document.getElementById('mf-title').value.trim();
+  c.manifesto.titleItalic=document.getElementById('mf-titleItalic').value.trim();
+  c.manifesto.body1=document.getElementById('mf-body1').value.trim();
+  c.manifesto.body2=document.getElementById('mf-body2').value.trim();
+  c.manifesto.image=document.getElementById('mf-image').value.trim();
+  c.editorial=c.editorial||{};
+  c.editorial.visible=document.getElementById('edVisible').checked;
+  c.newsletter=c.newsletter||{};
+  c.newsletter.visible=document.getElementById('nlVisible').checked;
+  c.newsletter.eyebrow=document.getElementById('nl-eyebrow').value.trim();
+  c.newsletter.title=document.getElementById('nl-title').value.trim();
+  c.newsletter.titleItalic=document.getElementById('nl-titleI').value.trim();
+  c.newsletter.titleRest=document.getElementById('nl-titleR').value.trim();
+  c.newsletter.subtitle=document.getElementById('nl-sub').value.trim();
+  c.newsletter.placeholder=document.getElementById('nl-placeholder').value.trim();
+  c.newsletter.buttonText=document.getElementById('nl-btn').value.trim();
+  c.footer=c.footer||{};
+  c.footer.copyrightSuffix=document.getElementById('footer-copy').value.trim();
   persist();
-  toast('Contenido guardado · Publica para que se vea en el sitio');
+  toast('Guardado · Publica para que se vea en el sitio');
 }
 
 function exportFile(){const c=generateProductsJS();downloadFile('products.js',c,'text/javascript');state.dirty=false;persist(false);toast('Descargado')}
@@ -634,7 +827,7 @@ function escapeHTML(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;',
 function slugify(s){return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').substring(0,30)}
 function toast(msg,type='success'){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';setTimeout(()=>t.classList.remove('show'),2500)}
 
-Object.assign(window,{openProductModal,closeModal,saveProduct,deleteProduct,quickDelete,addColor,removeColor,addSize,removeSize,openCollectionModal,closeCollectionModal,saveCollection,deleteCollection,quickDeleteCollection,saveSettings,exportFile,publishToSite,savePublishPassword,exportJSON,importJSON,doLogin,logout,addImage,updateImage,removeImage,moveImage,addAnnouncement,updateAnn,removeAnn,moveAnn,addNavItem,updateNav,removeNav,moveNav,saveContent});
+Object.assign(window,{openProductModal,closeModal,saveProduct,deleteProduct,quickDelete,addColor,removeColor,addSize,removeSize,openCollectionModal,closeCollectionModal,saveCollection,deleteCollection,quickDeleteCollection,saveSettings,exportFile,publishToSite,savePublishPassword,exportJSON,importJSON,doLogin,logout,addImage,updateImage,removeImage,moveImage,addAnnouncement,updateAnn,removeAnn,moveAnn,addNavItem,updateNav,removeNav,moveNav,saveContent,addPill,removePill,addEdBlock,updateEdBlock,removeEdBlock,addFooterColumn,removeFooterColumn,updateFooterColTitle,addFooterLink,removeFooterLink,updateFooterLink,addPayment,removePayment});
 
 init();checkPublishSetup();
 </script>
