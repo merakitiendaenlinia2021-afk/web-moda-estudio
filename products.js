@@ -1,6 +1,6 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 8:59:52 p. m.
+   31/5/2026, 9:01:30 p. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
@@ -115,7 +115,7 @@ window.COLLECTIONS = [
 window.PRODUCTS = [
   {
     "id": "chaqueta-casual",
-    "name": "Chaqueta casual",
+    "name": "Chaqueta casual A partir de 8 unid",
     "price": 66000,
     "oldPrice": null,
     "collection": "mayoristas",
