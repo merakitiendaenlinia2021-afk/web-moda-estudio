@@ -1,6 +1,6 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 6:44:01 p. m.
+   31/5/2026, 6:46:25 p. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
@@ -9,10 +9,7 @@ window.SITE_CONFIG = {
   "tagline": "Comfort-tech wear hecho en Colombia.",
   "announcementBarVisible": true,
   "announcements": [
-    "Envío gratis en compras superiores a $300.000 COP",
-    "Hasta 4 cuotas sin interés",
-    "Cambios y devoluciones gratis",
-    "Hecho en Colombia"
+    "Envío gratis en compras superiores a $300.000 COP"
   ],
   "navigation": [
     {
@@ -37,8 +34,8 @@ window.SITE_CONFIG = {
     "titleLine1": "Comfort",
     "titleLine2Italic": "tech",
     "titleLine2Rest": "wear",
-    "ctaPrimary": "Comprar ahora",
-    "ctaSecondary": "Nuestra filosofía",
+    "ctaPrimary": "",
+    "ctaSecondary": "",
     "image": "https://picsum.photos/seed/techwear1/1920/1200?grayscale"
   },
   "features": [
