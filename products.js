@@ -1,6 +1,6 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   31/5/2026, 9:52:24 p. m.
+   1/6/2026, 2:24:53 a. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
@@ -129,6 +129,21 @@ window.PRODUCTS = [
     ],
     "colors": [],
     "sizes": [],
+    "variantSection": {
+      "title": "Tipos de forros",
+      "items": [
+        {
+          "name": "Malla pool.",
+          "image": "https://i.ibb.co/1GtDg0GM/395e6a3774a2cbb8f70ef5475c3ba2e6.jpg",
+          "description": ""
+        },
+        {
+          "name": "Borrego",
+          "image": "https://i.ibb.co/3mMFnj8B/09a2981787b28ce3a896f56dfa405686.jpg",
+          "description": ""
+        }
+      ]
+    },
     "active": true
   }
 ];
