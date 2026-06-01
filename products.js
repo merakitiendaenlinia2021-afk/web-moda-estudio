@@ -1,6 +1,6 @@
 /* ============================================================
    PRODUCTS.JS — Publicado desde el panel admin
-   1/6/2026, 2:24:53 a. m.
+   1/6/2026, 2:26:23 a. m.
    ============================================================ */
 
 window.SITE_CONFIG = {
@@ -130,7 +130,7 @@ window.PRODUCTS = [
     "colors": [],
     "sizes": [],
     "variantSection": {
-      "title": "Tipos de forros",
+      "title": "Tipos de forros que te puedo ofrecer",
       "items": [
         {
           "name": "Malla pool.",
