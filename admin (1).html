@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Panel Admin · MODA ESTUDIO</title>
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Manrope',sans-serif;background:#F5F3EE;color:#0A0A0A;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
+img{max-width:100%;display:block}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,textarea,select{font:inherit}
+:root{--bg:#F5F3EE;--bg-2:#EDEAE3;--ink:#0A0A0A;--ink-soft:#2C2825;--muted:#8B8680;--line:#DDD8CF;--accent:#6B5D4F;--white:#FFFFFF;--success:#2D6A4F;--danger:#B23A3A}
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+.login-card{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:48px 40px;width:100%;max-width:420px;text-align:center}
+.login-card .logo{font-family:'Archivo',sans-serif;font-weight:900;font-size:28px;text-transform:uppercase;margin-bottom:8px}
+.login-card .logo .dot{color:var(--accent)}
+.login-card h1{font-family:'Archivo',sans-serif;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:32px}
+.login-card input{width:100%;padding:14px 18px;border:1px solid var(--line);border-radius:8px;font-size:14px;margin-bottom:12px;background:var(--bg);outline:none}
+.login-card input:focus{border-color:var(--ink)}
+.login-card button.primary{width:100%;padding:14px;background:var(--ink);color:var(--bg);border-radius:8px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:8px}
+.login-card button.primary:hover{background:var(--accent)}
+.login-hint{font-size:12px;color:var(--muted);margin-top:24px;line-height:1.6}
+.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+.sidebar{background:var(--ink);color:var(--bg);padding:24px 0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+.sidebar .brand{padding:0 24px 32px;font-family:'Archivo';font-weight:900;font-size:22px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.sidebar .brand .dot{color:var(--accent)}
+.sidebar .brand small{font-size:10px;font-weight:600;letter-spacing:.15em;color:var(--muted);text-transform:uppercase}
+.sidebar nav{flex:1;padding:0 12px}
+.sidebar nav button{width:100%;text-align:left;padding:12px 16px;border-radius:8px;font-size:13px;font-weight:500;color:rgba(245,243,238,.7);display:flex;align-items:center;gap:12px;margin-bottom:2px}
+.sidebar nav button:hover{background:rgba(245,243,238,.06);color:var(--bg)}
+.sidebar nav button.active{background:rgba(245,243,238,.1);color:var(--bg)}
+.sidebar nav button svg{width:16px;height:16px}
+.sidebar-footer{padding:24px;border-top:1px solid rgba(245,243,238,.1);font-size:11px;color:var(--muted)}
+.sidebar-footer button,.sidebar-footer a{color:rgba(245,243,238,.6);font-size:12px;padding:6px 0;text-decoration:none;display:block}
+.main{padding:32px 40px 80px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px;gap:16px;flex-wrap:wrap}
+.topbar h1{font-family:'Archivo';font-size:28px;font-weight:800;letter-spacing:-.02em}
+.topbar .actions{display:flex;gap:8px;align-items:center}
+.unsaved{display:none;align-items:center;gap:8px;padding:8px 14px;background:#FFF3CD;color:#856404;border:1px solid #FFE69C;border-radius:999px;font-size:12px;font-weight:600}
+.unsaved.show{display:inline-flex}
+.unsaved::before{content:'';width:8px;height:8px;background:#856404;border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;white-space:nowrap}
+.btn-primary{background:var(--ink);color:var(--bg)}
+.btn-primary:hover{background:var(--accent)}
+.btn-secondary{background:var(--white);color:var(--ink);border:1px solid var(--line)}
+.btn-secondary:hover{background:var(--bg-2)}
+.btn-danger{background:transparent;color:var(--danger);border:1px solid var(--danger)}
+.btn-danger:hover{background:var(--danger);color:var(--white)}
+.btn svg{width:14px;height:14px}
+.view{display:none}
+.view.active{display:block}
+.products-table{background:var(--white);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.products-row{display:grid;grid-template-columns:60px 1fr 140px 100px 110px 80px;gap:16px;padding:16px 20px;align-items:center;border-bottom:1px solid var(--line)}
+.products-row:last-child{border-bottom:none}
+.products-row:not(.header):hover{background:var(--bg)}
+.products-row.header{background:var(--bg-2);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.products-row .thumb{width:50px;height:60px;object-fit:cover;background:var(--bg-2);border-radius:4px}
+.products-row .pname{font-size:14px;font-weight:600}
+.products-row .pcol{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.products-row .pprice{font-size:14px;font-weight:600}
+.products-row .pprice .old{text-decoration:line-through;color:var(--muted);font-size:11px;display:block}
+.products-row .pstatus{display:inline-flex;align-items:center;gap:6px;font-size:12px}
+.status-dot{width:8px;height:8px;border-radius:50%}
+.status-dot.on{background:var(--success)}
+.status-dot.off{background:var(--muted)}
+.row-actions{display:flex;gap:6px;justify-content:flex-end}
+.row-actions button{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.row-actions button:hover{background:var(--bg-2)}
+.row-actions button svg{width:14px;height:14px}
+.row-actions button.del:hover{background:#fee;color:var(--danger)}
+.modal-overlay{position:fixed;inset:0;background:rgba(10,10,10,.5);z-index:90;opacity:0;visibility:hidden;transition:opacity .2s}
+.modal-overlay.open{opacity:1;visibility:visible}
+.modal{position:fixed;top:0;right:0;width:min(620px,100%);height:100vh;background:var(--bg);z-index:100;transform:translateX(100%);transition:transform .3s cubic-bezier(.65,0,.35,1);display:flex;flex-direction:column;box-shadow:-20px 0 60px rgba(0,0,0,.15)}
+.modal.open{transform:translateX(0)}
+.modal-header{padding:20px 28px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;background:var(--white)}
+.modal-header h2{font-family:'Archivo';font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.02em}
+.modal-body{flex:1;overflow-y:auto;padding:28px}
+.modal-footer{padding:16px 28px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:8px;background:var(--white)}
+.form-group{margin-bottom:20px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-label{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);margin-bottom:8px}
+.form-label .hint{font-weight:400;text-transform:none;letter-spacing:normal;color:var(--muted);margin-left:6px;font-size:11px}
+.form-input,.form-textarea,.form-select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--white);font-size:14px;outline:none}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--ink)}
+.form-textarea{resize:vertical;min-height:100px;font-family:inherit}
+.form-textarea.large{min-height:160px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:var(--white);border:1px solid var(--line);border-radius:999px;font-size:13px}
+.chip .swatch{width:14px;height:14px;border-radius:50%;border:1px solid var(--line)}
+.chip button{color:var(--muted);font-size:14px;line-height:1;padding:0 0 0 4px}
+.chip button:hover{color:var(--danger)}
+.chip-add{display:flex;gap:6px}
+.chip-add input{flex:1;padding:8px 12px;border:1px solid var(--line);border-radius:8px;font-size:13px;outline:none;background:var(--white)}
+.chip-add button{padding:8px 14px;background:var(--ink);color:var(--bg);border-radius:8px;font-size:12px;font-weight:600}
+.switch{display:inline-flex;align-items:center;gap:12px;cursor:pointer}
+.switch input{display:none}
+.switch-track{width:40px;height:22px;background:var(--line);border-radius:999px;position:relative;transition:background .2s}
+.switch-track::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;background:white;border-radius:50%;transition:transform .2s}
+.switch input:checked + .switch-track{background:var(--success)}
+.switch input:checked + .switch-track::after{transform:translateX(18px)}
+/* IMAGE GALLERY MANAGER */
+.images-list{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
+.image-row{display:grid;grid-template-columns:80px 1fr auto auto auto;gap:8px;align-items:center;background:var(--white);border:1px solid var(--line);border-radius:8px;padding:8px}
+.image-row .thumb-box{width:80px;height:100px;background:var(--bg-2);border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--muted);text-align:center}
+.image-row .thumb-box img{width:100%;height:100%;object-fit:cover}
+.image-row .url-input{padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:var(--bg)}
+.image-row .url-input:focus{border-color:var(--ink)}
+.image-row .move-btn{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.image-row .move-btn:hover{background:var(--bg-2);color:var(--ink)}
+.image-row .del-btn{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.image-row .del-btn:hover{background:#fee;color:var(--danger)}
+.add-image-btn{width:100%;padding:14px;background:var(--bg);border:2px dashed var(--line);border-radius:8px;color:var(--muted);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.add-image-btn:hover{border-color:var(--ink);color:var(--ink)}
+.empty-card{background:var(--white);border:1px dashed var(--line);border-radius:12px;padding:60px 24px;text-align:center}
+.empty-card h3{font-family:'Archivo';font-size:18px;margin-bottom:8px}
+.empty-card p{color:var(--muted);margin-bottom:20px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--ink);color:var(--bg);padding:14px 24px;border-radius:999px;font-size:13px;font-weight:500;z-index:200;box-shadow:0 10px 30px rgba(0,0,0,.2);opacity:0;transition:transform .3s,opacity .3s;pointer-events:none}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.toast.success{background:var(--success)}
+.toast.error{background:var(--danger)}
+.export-modal{max-width:600px;margin:24px auto}
+@media (max-width:900px){.app{grid-template-columns:1fr}.sidebar{position:relative;height:auto;flex-direction:row;align-items:center;padding:12px 16px;flex-wrap:wrap}.sidebar .brand{padding:0;flex:1;font-size:16px}.sidebar nav{display:flex;padding:0;gap:4px;overflow-x:auto;width:100%;margin-top:12px}.sidebar nav button{flex-shrink:0;padding:8px 14px;font-size:12px}.sidebar-footer{display:none}.main{padding:24px 16px 60px}.products-row{grid-template-columns:50px 1fr 80px;gap:12px;padding:12px 14px}.products-row .pcol,.products-row .pstatus,.products-row .pprice{display:none}.products-row.header .pcol,.products-row.header .pstatus,.products-row.header .pprice{display:none}.modal{width:100%}.form-row{grid-template-columns:1fr;gap:0}}
+</style>
+</head>
+<body>
+
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="logo">MODA ESTUDIO<span class="dot">.</span></div>
+    <h1>Panel admin</h1>
+    <input type="password" id="loginPassword" placeholder="Contraseña" autofocus>
+    <button class="primary" onclick="doLogin()">Ingresar</button>
+    <p class="login-hint">Primer ingreso: usa <strong>admin</strong> y luego cámbiala en Configuración.</p>
+  </div>
+</div>
+
+<div class="app" id="app" style="display:none;">
+  <aside class="sidebar">
+    <div class="brand"><span>MODA<span class="dot">.</span></span><small style="margin-left:auto;">Admin</small></div>
+    <nav>
+      <button class="active" data-view="products"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>Productos</button>
+      <button data-view="collections"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Colecciones</button>
+      <button data-view="content"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h7"/></svg>Contenido del sitio</button>
+      <button data-view="settings"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Configuración</button>
+      <button data-view="export"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Publicar cambios</button>
+    </nav>
+    <div class="sidebar-footer">
+      <div style="margin-bottom:8px;">Sesión activa</div>
+      <a href="index.html" target="_blank">↗ Ver sitio público</a>
+      <button onclick="logout()">↶ Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <section class="view active" id="view-products">
+      <div class="topbar">
+        <h1>Productos</h1>
+        <div class="actions">
+          <div class="unsaved" id="unsavedBadge">Cambios sin publicar</div>
+          <button class="btn btn-primary" onclick="openProductModal()">+ Nuevo producto</button>
+        </div>
+      </div>
+      <div id="productsList"></div>
+    </section>
+
+    <section class="view" id="view-collections">
+      <div class="topbar"><h1>Colecciones</h1><div class="actions"><button class="btn btn-primary" onclick="openCollectionModal()">+ Nueva colección</button></div></div>
+      <div id="collectionsList"></div>
+    </section>
+
+    <section class="view" id="view-content">
+      <div class="topbar"><h1>Contenido del sitio</h1></div>
+
+      <!-- BARRA DE ANUNCIOS -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:16px;flex-wrap:wrap;">
+          <div>
+            <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">📢 Barra superior</h3>
+            <p style="font-size:13px;color:var(--muted);">Los mensajes que rotan arriba del sitio.</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="annBarVisible"><div class="switch-track"></div></label>
+        </div>
+        <div id="annList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;"></div>
+        <div class="chip-add">
+          <input type="text" id="annInput" placeholder="Nuevo mensaje (ej: 10% OFF en tu primera compra)">
+          <button onclick="addAnnouncement()">Agregar</button>
+        </div>
+        <button class="btn btn-primary" style="margin-top:16px;" onclick="saveContent()">Guardar barra superior</button>
+      </div>
+
+      <!-- HERO -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">🎬 Hero (portada)</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">La sección grande de bienvenida con la imagen de fondo.</p>
+        <div class="form-group">
+          <label class="form-label">Eyebrow <span class="hint">(texto pequeño arriba del título)</span></label>
+          <input class="form-input" id="hero-eyebrow" placeholder="— Colección Otoño 2026">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Primera línea del título</label>
+          <input class="form-input" id="hero-title1" placeholder="Comfort">
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Palabra itálica</label><input class="form-input" id="hero-title2i" placeholder="tech"></div>
+          <div class="form-group"><label class="form-label">Resto de la línea</label><input class="form-input" id="hero-title2r" placeholder="wear"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Imagen de fondo (URL)</label>
+          <input class="form-input" id="hero-image" placeholder="https://...">
+          <div id="hero-img-preview" style="margin-top:12px;"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Botón principal (texto)</label><input class="form-input" id="hero-cta1" placeholder="Comprar ahora"></div>
+          <div class="form-group"><label class="form-label">Botón secundario (texto)</label><input class="form-input" id="hero-cta2" placeholder="Nuestra filosofía"></div>
+        </div>
+        <button class="btn btn-primary" onclick="saveContent()">Guardar hero</button>
+      </div>
+
+      <!-- MENÚ NAVEGACIÓN -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">🧭 Menú de navegación</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Las opciones que aparecen arriba (Productos, Colecciones, etc.).</p>
+        <div id="navList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;"></div>
+        <button class="btn btn-secondary" onclick="addNavItem()" style="margin-bottom:16px;">+ Agregar opción</button>
+        <div style="background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:12px;margin-bottom:16px;font-size:12px;color:var(--muted);">
+          💡 <strong>Tip:</strong> en "Enlace" puedes usar <code>#productos</code>, <code>#colecciones</code>, <code>#nosotros</code> para ir a secciones del mismo sitio. O una URL completa como <code>https://...</code>
+        </div>
+        <button class="btn btn-primary" onclick="saveContent()">Guardar menú</button>
+      </div>
+
+      <!-- FEATURES BAR -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:16px;flex-wrap:wrap;">
+          <div>
+            <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">🎯 Barra de features</h3>
+            <p style="font-size:13px;color:var(--muted);">La barra que rota debajo del hero (SPORT-PROOF, ALL DAY-WEAR, etc.)</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="featVisible"><div class="switch-track"></div></label>
+        </div>
+        <div id="featList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px;"></div>
+        <div class="chip-add">
+          <input type="text" id="featInput" placeholder="Nueva característica (ej: Hecho a mano)">
+          <button onclick="addFeat()">Agregar</button>
+        </div>
+        <button class="btn btn-primary" style="margin-top:16px;" onclick="saveContent()">Guardar features</button>
+      </div>
+
+      <!-- TÍTULOS DE SECCIONES -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">📑 Títulos de secciones</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Los títulos grandes de Colecciones y Productos.</p>
+        <div style="border:1px dashed var(--line);border-radius:8px;padding:14px;margin-bottom:14px;background:var(--bg);">
+          <strong style="font-size:13px;display:block;margin-bottom:10px;">📦 Sección de Colecciones</strong>
+          <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" id="sec-colEyebrow" placeholder="— Colecciones"></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Título</label><input class="form-input" id="sec-colTitle" placeholder="Diseñado para"></div>
+            <div class="form-group"><label class="form-label">Palabra itálica</label><input class="form-input" id="sec-colTitleI" placeholder="moverte"></div>
+          </div>
+        </div>
+        <div style="border:1px dashed var(--line);border-radius:8px;padding:14px;background:var(--bg);">
+          <strong style="font-size:13px;display:block;margin-bottom:10px;">🛍️ Sección de Productos</strong>
+          <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" id="sec-prodEyebrow" placeholder="— Lo más vendido"></div>
+          <div class="form-row">
+            <div class="form-group"><label class="form-label">Título</label><input class="form-input" id="sec-prodTitle" placeholder="Más"></div>
+            <div class="form-group"><label class="form-label">Palabra itálica</label><input class="form-input" id="sec-prodTitleI" placeholder="querido"></div>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="margin-top:16px;" onclick="saveContent()">Guardar títulos</button>
+      </div>
+
+      <!-- NOSOTROS / MANIFESTO -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:16px;flex-wrap:wrap;">
+          <div>
+            <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">💬 Sección Nosotros</h3>
+            <p style="font-size:13px;color:var(--muted);">La sección oscura con la imagen y filosofía de la marca.</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="mfVisible"><div class="switch-track"></div></label>
+        </div>
+        <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" id="mf-eyebrow"></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Primera parte del título</label><input class="form-input" id="mf-title"></div>
+          <div class="form-group"><label class="form-label">Parte itálica</label><input class="form-input" id="mf-titleItalic"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Primer párrafo</label><textarea class="form-textarea" id="mf-body1"></textarea></div>
+        <div class="form-group"><label class="form-label">Segundo párrafo <span class="hint">(opcional)</span></label><textarea class="form-textarea" id="mf-body2"></textarea></div>
+        <div class="form-group">
+          <label class="form-label">Imagen <span class="hint">(URL)</span></label>
+          <input class="form-input" id="mf-image">
+          <div id="mf-preview" style="margin-top:12px;"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Características (pills)</label>
+          <div class="chips" id="mfPills"></div>
+          <div class="chip-add"><input type="text" id="mfPillInput" placeholder="Ej: Travel-friendly"><button onclick="addPill()">Agregar</button></div>
+        </div>
+        <button class="btn btn-primary" onclick="saveContent()">Guardar sección</button>
+      </div>
+
+      <!-- EDITORIALES -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:16px;flex-wrap:wrap;">
+          <div>
+            <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">📰 Bloques editoriales</h3>
+            <p style="font-size:13px;color:var(--muted);">Los 2 bloques grandes con imagen (Lookbook, Tiendas, etc.).</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="edVisible"><div class="switch-track"></div></label>
+        </div>
+        <div id="edBlocksList"></div>
+        <button class="btn btn-secondary" onclick="addEdBlock()" style="margin-top:8px;">+ Agregar bloque</button>
+        <div style="margin-top:16px;"><button class="btn btn-primary" onclick="saveContent()">Guardar editoriales</button></div>
+      </div>
+
+      <!-- NEWSLETTER -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;gap:16px;flex-wrap:wrap;">
+          <div>
+            <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">📧 Newsletter</h3>
+            <p style="font-size:13px;color:var(--muted);">La sección de suscripción al correo.</p>
+          </div>
+          <label class="switch"><input type="checkbox" id="nlVisible"><div class="switch-track"></div></label>
+        </div>
+        <div class="form-group"><label class="form-label">Eyebrow</label><input class="form-input" id="nl-eyebrow"></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Primera parte</label><input class="form-input" id="nl-title"></div>
+          <div class="form-group"><label class="form-label">Itálica</label><input class="form-input" id="nl-titleI"></div>
+        </div>
+        <div class="form-group"><label class="form-label">Resto del título</label><input class="form-input" id="nl-titleR"></div>
+        <div class="form-group"><label class="form-label">Subtítulo</label><textarea class="form-textarea" id="nl-sub"></textarea></div>
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">Placeholder del input</label><input class="form-input" id="nl-placeholder"></div>
+          <div class="form-group"><label class="form-label">Texto del botón</label><input class="form-input" id="nl-btn"></div>
+        </div>
+        <button class="btn btn-primary" onclick="saveContent()">Guardar newsletter</button>
+      </div>
+
+      <!-- FOOTER -->
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:24px;margin-bottom:20px;max-width:780px;">
+        <h3 style="font-family:'Archivo';font-size:18px;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;">🦶 Footer</h3>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Las columnas con enlaces al final del sitio.</p>
+        <div id="footerColumnsAdmin"></div>
+        <button class="btn btn-secondary" onclick="addFooterColumn()" style="margin-top:8px;">+ Agregar columna</button>
+        <hr style="border:none;border-top:1px solid var(--line);margin:24px 0;">
+        <div class="form-group">
+          <label class="form-label">Métodos de pago (badges)</label>
+          <div class="chips" id="paymentsList"></div>
+          <div class="chip-add"><input type="text" id="paymentInput" placeholder="Ej: VISA, NEQUI, BANCOLOMBIA"><button onclick="addPayment()">Agregar</button></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Texto del copyright <span class="hint">(después del año y nombre)</span></label>
+          <input class="form-input" id="footer-copy" placeholder="Hecho en Colombia">
+        </div>
+        <button class="btn btn-primary" onclick="saveContent()">Guardar footer</button>
+      </div>
+    </section>
+
+    <section class="view" id="view-settings">
+      <div class="topbar"><h1>Configuración</h1></div>
+      <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:28px;max-width:680px;">
+        <div class="form-group"><label class="form-label">Nombre de la marca</label><input class="form-input" id="cfg-brandName"></div>
+        <div class="form-group"><label class="form-label">Eslogan (footer)</label><textarea class="form-textarea" id="cfg-tagline"></textarea></div>
+        <hr style="border:none;border-top:1px solid var(--line);margin:24px 0;">
+        <div class="form-group"><label class="form-label">Cambiar contraseña del admin</label><input class="form-input" type="password" id="cfg-newPassword" placeholder="Nueva contraseña (vacío = no cambia)"></div>
+        <button class="btn btn-primary" onclick="saveSettings()">Guardar</button>
+      </div>
+    </section>
+
+    <section class="view" id="view-export">
+      <div class="topbar"><h1>Publicar cambios</h1></div>
+      <div class="export-modal">
+        <div style="background:linear-gradient(135deg,#0A0A0A 0%,#2C2825 100%);color:var(--bg);border-radius:12px;padding:32px;margin-bottom:24px;">
+          <h3 style="font-family:'Archivo';font-size:20px;text-transform:uppercase;letter-spacing:.02em;margin-bottom:12px;">⚡ Publicar al sitio</h3>
+          <p style="color:rgba(245,243,238,.75);font-size:14px;margin-bottom:24px;">Con un solo clic, tus cambios estarán en vivo en ~30 segundos.</p>
+          <button class="btn" id="publishBtn" onclick="publishToSite()" style="background:var(--bg);color:var(--ink);padding:14px 28px;font-size:14px;"><span id="publishBtnText">Publicar cambios al sitio</span></button>
+          <div id="publishStatus" style="margin-top:16px;font-size:13px;color:rgba(245,243,238,.7);display:none;"></div>
+        </div>
+        <div id="publishSetup" style="display:none;background:#FFF3CD;border:1px solid #FFE69C;border-radius:12px;padding:20px;margin-bottom:24px;">
+          <h4 style="font-size:14px;margin-bottom:8px;color:#856404;">⚠️ Configura tu contraseña de publicación</h4>
+          <p style="font-size:13px;color:#856404;margin-bottom:12px;">Esta contraseña debe coincidir con <code>PUBLISH_PASSWORD</code> en Netlify.</p>
+          <div style="display:flex;gap:8px;"><input type="password" id="publishPwd" placeholder="Tu contraseña" style="flex:1;padding:10px 14px;border:1px solid #FFE69C;border-radius:8px;background:white;font-size:13px;"><button class="btn btn-primary" onclick="savePublishPassword()">Guardar</button></div>
+        </div>
+        <details style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:20px;">
+          <summary style="font-weight:600;font-size:14px;cursor:pointer;">¿Prefieres modo manual?</summary>
+          <div style="margin-top:16px;"><button class="btn btn-secondary" onclick="exportFile()">Descargar products.js</button></div>
+        </details>
+        <div style="background:var(--white);border:1px solid var(--line);border-radius:12px;padding:20px;">
+          <h4 style="font-size:14px;margin-bottom:8px;">📦 Backup</h4>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="btn btn-secondary" onclick="exportJSON()">Exportar JSON</button><button class="btn btn-secondary" onclick="document.getElementById('importJSON').click()">Importar JSON</button><input type="file" id="importJSON" accept=".json" style="display:none" onchange="importJSON(this)"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+
+<!-- PRODUCT MODAL -->
+<aside class="modal" id="productModal">
+  <div class="modal-header"><h2 id="modalTitle">Nuevo producto</h2><button class="btn btn-secondary" onclick="closeModal()" style="padding:6px 12px;">✕</button></div>
+  <div class="modal-body">
+    <input type="hidden" id="p-id">
+    <div class="form-group"><label class="form-label">Nombre del producto</label><input class="form-input" id="p-name"></div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Precio (COP)</label><input class="form-input" id="p-price" type="number"></div>
+      <div class="form-group"><label class="form-label">Precio anterior <span class="hint">(opcional)</span></label><input class="form-input" id="p-oldPrice" type="number"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label class="form-label">Colección</label><select class="form-select" id="p-collection"></select></div>
+      <div class="form-group"><label class="form-label">Etiqueta</label><select class="form-select" id="p-tag"><option value="">Sin etiqueta</option><option value="new">Nuevo</option><option value="sale">Sale</option><option value="bestseller">Bestseller</option></select></div>
+    </div>
+    <div class="form-group"><label class="form-label">SKU <span class="hint">(código interno, opcional)</span></label><input class="form-input" id="p-sku"></div>
+    
+    <!-- DESCRIPCIONES -->
+    <div class="form-group">
+      <label class="form-label">Descripción corta <span class="hint">(1 línea, aparece en la página del producto)</span></label>
+      <textarea class="form-textarea" id="p-shortDesc" placeholder="Buzo techwear de cuello redondo, perfecto para cualquier ocasión."></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Descripción larga <span class="hint">(detalles, materiales, cuidados)</span></label>
+      <textarea class="form-textarea large" id="p-longDesc" placeholder="Describe el producto en detalle. Puedes usar saltos de línea para separar párrafos."></textarea>
+    </div>
+    
+    <!-- GALERÍA DE IMÁGENES -->
+    <div class="form-group">
+      <label class="form-label">Imágenes del producto <span class="hint">(la primera es la principal)</span></label>
+      <div class="images-list" id="imagesList"></div>
+      <button class="add-image-btn" onclick="addImage()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Agregar otra imagen
+      </button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Colores disponibles</label>
+      <div class="chips" id="colorChips"></div>
+      <div class="chip-add"><input type="color" id="colorInput" value="#0A0A0A" style="width:50px;padding:0;height:36px;"><input type="text" id="colorHex" placeholder="o pega hex: #0A0A0A"><button onclick="addColor()">Agregar</button></div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Tallas disponibles</label>
+      <div class="chips" id="sizeChips"></div>
+      <div class="chip-add"><input type="text" id="sizeInput" placeholder="S, M, L, XL, 32, 34..."><button onclick="addSize()">Agregar</button></div>
+    </div>
+
+    <!-- VARIANTES VISUALES (tipos de forros, etc.) -->
+    <div class="form-group" style="background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:14px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:12px;flex-wrap:wrap;">
+        <div>
+          <strong style="font-size:13px;display:block;">📚 Sección visual extra</strong>
+          <span style="font-size:11px;color:var(--muted);">Galería informativa (forros, materiales, opciones, etc.) — solo para mostrar, no es interactiva</span>
+        </div>
+      </div>
+      <input class="form-input" id="p-variantTitle" placeholder="Título (ej: Tipos de forros, Materiales, Acabados)" style="margin-bottom:10px;">
+      <div id="variantsList" style="display:flex;flex-direction:column;gap:8px;margin-bottom:8px;"></div>
+      <button type="button" class="add-image-btn" onclick="addVariant()" style="padding:10px;font-size:12px;">
+        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Agregar opción
+      </button>
+      <div style="margin-top:8px;font-size:11px;color:var(--muted);">💡 Si no agregas ninguna opción, esta sección no aparece en el producto.</div>
+    </div>
+    <div class="form-group" style="display:flex;align-items:center;justify-content:space-between;padding:16px;background:var(--white);border:1px solid var(--line);border-radius:8px;">
+      <div><strong style="font-size:14px;">Producto activo</strong><div style="font-size:12px;color:var(--muted);">Si está apagado, no aparece en el sitio</div></div>
+      <label class="switch"><input type="checkbox" id="p-active" checked><div class="switch-track"></div></label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" id="deleteBtn" onclick="deleteProduct()" style="display:none;">Eliminar</button>
+    <div style="margin-left:auto;display:flex;gap:8px;"><button class="btn btn-secondary" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="saveProduct()">Guardar producto</button></div>
+  </div>
+</aside>
+
+<!-- COLLECTION MODAL -->
+<aside class="modal" id="collectionModal">
+  <div class="modal-header"><h2 id="collectionModalTitle">Nueva colección</h2><button class="btn btn-secondary" onclick="closeCollectionModal()" style="padding:6px 12px;">✕</button></div>
+  <div class="modal-body">
+    <input type="hidden" id="c-id">
+    <div class="form-group"><label class="form-label">ID <span class="hint">(sin espacios, ej: nexis)</span></label><input class="form-input" id="c-idInput"></div>
+    <div class="form-group"><label class="form-label">Nombre visible</label><input class="form-input" id="c-name"></div>
+    <div class="form-group"><label class="form-label">Descripción corta</label><input class="form-input" id="c-description"></div>
+    <div class="form-group"><label class="form-label">Imagen (URL)</label><input class="form-input" id="c-image"></div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-danger" id="cDeleteBtn" onclick="deleteCollection()" style="display:none;">Eliminar</button>
+    <div style="margin-left:auto;display:flex;gap:8px;"><button class="btn btn-secondary" onclick="closeCollectionModal()">Cancelar</button><button class="btn btn-primary" onclick="saveCollection()">Guardar</button></div>
+  </div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script src="products.js"></script>
+<script>
+const DEFAULT_PASSWORD='admin';
+const STORAGE_KEY='moda_admin_data';
+const PWD_KEY='moda_admin_pwd';
+const PUBLISH_PWD_KEY='moda_publish_pwd';
+let state={config:null,collections:[],products:[],dirty:false};
+let currentProductEdit=null,currentCollectionEdit=null;
+let tempColors=[],tempSizes=[],tempImages=[],tempVariants=[],tempVariantTitle="Tipos de forros";
+
+function init(){
+  if(sessionStorage.getItem('moda_logged_in')==='1')showApp();
+  else document.getElementById('loginScreen').style.display='flex';
+  loadData();
+}
+function doLogin(){
+  const input=document.getElementById('loginPassword').value;
+  const stored=localStorage.getItem(PWD_KEY)||DEFAULT_PASSWORD;
+  if(input===stored){sessionStorage.setItem('moda_logged_in','1');showApp()}
+  else toast('Contraseña incorrecta','error');
+}
+document.getElementById('loginPassword')?.addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
+function showApp(){document.getElementById('loginScreen').style.display='none';document.getElementById('app').style.display='grid'}
+function logout(){sessionStorage.removeItem('moda_logged_in');location.reload()}
+
+function loadData(){
+  const stored=localStorage.getItem(STORAGE_KEY);
+  if(stored){try{const d=JSON.parse(stored);state.config=d.config;state.collections=d.collections;state.products=migrateProducts(d.products);state.dirty=d.dirty||false}catch(e){loadDefault()}}
+  else loadDefault();
+  renderProducts();renderCollections();renderSettings();renderContent();updateUnsavedBadge();
+}
+function migrateProducts(prods){
+  return (prods||[]).map(p=>{
+    if(!Array.isArray(p.images)){
+      const imgs=[];
+      if(p.image)imgs.push(p.image);
+      if(p.imageHover)imgs.push(p.imageHover);
+      p.images=imgs;
+    }
+    if(!p.shortDescription)p.shortDescription='';
+    if(!p.longDescription)p.longDescription='';
+    if(!p.sku)p.sku='';
+    if(!p.variantSection)p.variantSection={title:"Tipos de forros",items:[]};
+    return p;
+  });
+}
+function loadDefault(){
+  state.config=JSON.parse(JSON.stringify(window.SITE_CONFIG||{}));
+  state.collections=JSON.parse(JSON.stringify(window.COLLECTIONS||[]));
+  state.products=migrateProducts(JSON.parse(JSON.stringify(window.PRODUCTS||[])));
+  state.dirty=false;
+}
+function persist(mark=true){if(mark)state.dirty=true;localStorage.setItem(STORAGE_KEY,JSON.stringify(state));updateUnsavedBadge()}
+function updateUnsavedBadge(){document.getElementById('unsavedBadge').classList.toggle('show',state.dirty)}
+
+document.querySelectorAll('.sidebar nav button').forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll('.sidebar nav button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById('view-'+btn.dataset.view).classList.add('active');
+  };
+});
+
+function renderProducts(){
+  const list=document.getElementById('productsList');
+  if(state.products.length===0){list.innerHTML='<div class="empty-card"><h3>Aún no tienes productos</h3><p>Agrega tu primer producto.</p><button class="btn btn-primary" onclick="openProductModal()">+ Nuevo</button></div>';return}
+  list.innerHTML=`<div class="products-table"><div class="products-row header"><div></div><div>Producto</div><div class="pcol">Colección</div><div class="pprice">Precio</div><div class="pstatus">Estado</div><div></div></div>${state.products.map((p,i)=>{
+    const col=state.collections.find(c=>c.id===p.collection);
+    const mainImg=(p.images&&p.images[0])||'';
+    return `<div class="products-row">
+      <img class="thumb" src="${escapeHTML(mainImg)}" onerror="this.style.opacity=.3">
+      <div><div class="pname">${escapeHTML(p.name)}</div><div style="font-size:12px;color:var(--muted);">${(p.images||[]).length} fotos · ${(p.colors||[]).length} colores · ${(p.sizes||[]).length} tallas</div></div>
+      <div class="pcol">${col?escapeHTML(col.name):'—'}</div>
+      <div class="pprice">${formatCOP(p.price)}${p.oldPrice?`<span class="old">${formatCOP(p.oldPrice)}</span>`:''}</div>
+      <div class="pstatus"><span class="status-dot ${p.active!==false?'on':'off'}"></span>${p.active!==false?'Activo':'Oculto'}</div>
+      <div class="row-actions">
+        <button onclick="openProductModal(${i})" title="Editar"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+        <button class="del" onclick="quickDelete(${i})"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function openProductModal(index=null){
+  currentProductEdit=index;
+  const p=index!==null?state.products[index]:{};
+  document.getElementById('modalTitle').textContent=index!==null?'Editar producto':'Nuevo producto';
+  document.getElementById('p-id').value=p.id||'';
+  document.getElementById('p-name').value=p.name||'';
+  document.getElementById('p-price').value=p.price||'';
+  document.getElementById('p-oldPrice').value=p.oldPrice||'';
+  document.getElementById('p-tag').value=p.tag||'';
+  document.getElementById('p-sku').value=p.sku||'';
+  document.getElementById('p-shortDesc').value=p.shortDescription||'';
+  document.getElementById('p-longDesc').value=p.longDescription||'';
+  document.getElementById('p-active').checked=p.active!==false;
+  const colSelect=document.getElementById('p-collection');
+  colSelect.innerHTML='<option value="">— Sin colección —</option>'+state.collections.map(c=>`<option value="${escapeHTML(c.id)}" ${p.collection===c.id?'selected':''}>${escapeHTML(c.name)}</option>`).join('');
+  tempColors=[...(p.colors||[])];
+  tempSizes=[...(p.sizes||[])];
+  tempImages=[...(p.images||[])];
+  if(tempImages.length===0)tempImages.push('');
+  tempVariants=[...((p.variantSection&&p.variantSection.items)||[])];
+  tempVariantTitle=(p.variantSection&&p.variantSection.title)||"Tipos de forros";
+  document.getElementById('p-variantTitle').value=tempVariantTitle;
+  renderColorChips();renderSizeChips();renderImagesList();renderVariantsList();
+  document.getElementById('deleteBtn').style.display=index!==null?'inline-flex':'none';
+  document.getElementById('productModal').classList.add('open');
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(){
+  document.getElementById('productModal').classList.remove('open');
+  document.getElementById('collectionModal').classList.remove('open');
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+function renderImagesList(){
+  const list=document.getElementById('imagesList');
+  list.innerHTML=tempImages.map((url,i)=>`
+    <div class="image-row">
+      <div class="thumb-box">${url?`<img src="${escapeHTML(url)}" onerror="this.replaceWith(Object.assign(document.createElement('div'),{textContent:'No carga',style:'font-size:10px;color:#aaa'}))">`:'<span>Sin URL</span>'}</div>
+      <input class="url-input" placeholder="https://imgbb.com/... o cualquier URL de imagen" value="${escapeHTML(url)}" oninput="updateImage(${i},this.value)">
+      <button class="move-btn" onclick="moveImage(${i},-1)" ${i===0?'disabled style="opacity:.3"':''} title="Subir"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button>
+      <button class="move-btn" onclick="moveImage(${i},1)" ${i===tempImages.length-1?'disabled style="opacity:.3"':''} title="Bajar"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
+      <button class="del-btn" onclick="removeImage(${i})" title="Eliminar"><svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>`).join('');
+}
+function addImage(){tempImages.push('');renderImagesList()}
+function updateImage(i,url){tempImages[i]=url;clearTimeout(window._imgT);window._imgT=setTimeout(renderImagesList,500)}
+function removeImage(i){if(tempImages.length<=1){tempImages[0]='';renderImagesList()}else{tempImages.splice(i,1);renderImagesList()}}
+function moveImage(i,dir){const ni=i+dir;if(ni<0||ni>=tempImages.length)return;[tempImages[i],tempImages[ni]]=[tempImages[ni],tempImages[i]];renderImagesList()}
+
+// VARIANT SECTION (visual gallery, e.g. forros)
+function renderVariantsList(){
+  const list=document.getElementById('variantsList');
+  if(!list)return;
+  list.innerHTML=tempVariants.map((v,i)=>`
+    <div style="background:var(--white);border:1px solid var(--line);border-radius:8px;padding:10px;">
+      <div style="display:grid;grid-template-columns:60px 1fr auto auto auto;gap:8px;align-items:center;margin-bottom:6px;">
+        <div style="width:60px;height:60px;background:var(--bg-2);border-radius:6px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--muted);">
+          ${v.image?`<img src="${escapeHTML(v.image)}" style="width:100%;height:100%;object-fit:cover;" onerror="this.replaceWith(Object.assign(document.createElement('span'),{textContent:'No carga'}))">`:'<span>Sin foto</span>'}
+        </div>
+        <input placeholder="Nombre (ej: Forro polar)" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:var(--bg);" value="${escapeHTML(v.name||'')}" oninput="updateVariant(${i},'name',this.value)">
+        <button onclick="moveVariant(${i},-1)" ${i===0?'disabled style="opacity:.3"':''} style="width:28px;height:28px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">↑</button>
+        <button onclick="moveVariant(${i},1)" ${i===tempVariants.length-1?'disabled style="opacity:.3"':''} style="width:28px;height:28px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">↓</button>
+        <button onclick="removeVariant(${i})" style="width:28px;height:28px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">✕</button>
+      </div>
+      <input placeholder="URL imagen (de imgBB)" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:12px;outline:none;background:var(--bg);width:100%;margin-bottom:6px;" value="${escapeHTML(v.image||'')}" oninput="updateVariant(${i},'image',this.value)">
+      <input placeholder="Descripción corta (opcional)" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:12px;outline:none;background:var(--bg);width:100%;" value="${escapeHTML(v.description||'')}" oninput="updateVariant(${i},'description',this.value)">
+    </div>`).join('')||'<div style="font-size:12px;color:var(--muted);padding:8px 0;">Sin opciones. Haz clic en "Agregar opción" para crear la primera.</div>';
+}
+function addVariant(){tempVariants.push({name:"",image:"",description:""});renderVariantsList()}
+function updateVariant(i,k,v){if(!tempVariants[i])return;tempVariants[i][k]=v;clearTimeout(window._varT);window._varT=setTimeout(()=>{const url=tempVariants[i]&&tempVariants[i].image;if(k==='image')renderVariantsList()},500)}
+function removeVariant(i){tempVariants.splice(i,1);renderVariantsList()}
+function moveVariant(i,d){const ni=i+d;if(ni<0||ni>=tempVariants.length)return;[tempVariants[i],tempVariants[ni]]=[tempVariants[ni],tempVariants[i]];renderVariantsList()}
+
+function saveProduct(){
+  const name=document.getElementById('p-name').value.trim();
+  const price=parseInt(document.getElementById('p-price').value);
+  if(!name)return toast('El nombre es obligatorio','error');
+  if(!price||price<=0)return toast('El precio debe ser mayor a 0','error');
+  const product={
+    id:document.getElementById('p-id').value||slugify(name),
+    name,price,
+    oldPrice:parseInt(document.getElementById('p-oldPrice').value)||null,
+    collection:document.getElementById('p-collection').value||null,
+    tag:document.getElementById('p-tag').value||null,
+    sku:document.getElementById('p-sku').value.trim(),
+    shortDescription:document.getElementById('p-shortDesc').value.trim(),
+    longDescription:document.getElementById('p-longDesc').value.trim(),
+    images:tempImages.filter(u=>u.trim()),
+    colors:tempColors,
+    sizes:tempSizes,
+    variantSection:{
+      title:document.getElementById('p-variantTitle').value.trim()||"Tipos de forros",
+      items:tempVariants.filter(v=>v.name&&v.name.trim())
+    },
+    active:document.getElementById('p-active').checked
+  };
+  if(product.images.length===0){return toast('Agrega al menos una imagen','error')}
+  if(currentProductEdit!==null){state.products[currentProductEdit]=product;toast('Producto actualizado')}
+  else{while(state.products.some(p=>p.id===product.id))product.id+='-'+Math.floor(Math.random()*1000);state.products.push(product);toast('Producto agregado')}
+  persist();renderProducts();closeModal();
+}
+function deleteProduct(){if(currentProductEdit===null)return;if(!confirm('¿Eliminar este producto?'))return;state.products.splice(currentProductEdit,1);persist();renderProducts();closeModal();toast('Eliminado')}
+function quickDelete(i){if(!confirm(`¿Eliminar "${state.products[i].name}"?`))return;state.products.splice(i,1);persist();renderProducts();toast('Eliminado')}
+
+function addColor(){let v=document.getElementById('colorHex').value.trim()||document.getElementById('colorInput').value;if(!v)return;if(!v.startsWith('#'))v='#'+v;if(!/^#[0-9A-Fa-f]{3,8}$/.test(v))return toast('Color inválido','error');if(tempColors.includes(v))return toast('Ya está','error');tempColors.push(v.toUpperCase());document.getElementById('colorHex').value='';renderColorChips()}
+function removeColor(i){tempColors.splice(i,1);renderColorChips()}
+function renderColorChips(){document.getElementById('colorChips').innerHTML=tempColors.map((c,i)=>`<div class="chip"><span class="swatch" style="background:${escapeHTML(c)}"></span>${escapeHTML(c)}<button onclick="removeColor(${i})">✕</button></div>`).join('')||'<span style="font-size:12px;color:var(--muted);">Sin colores</span>'}
+function addSize(){const v=document.getElementById('sizeInput').value.trim();if(!v)return;if(tempSizes.includes(v))return toast('Ya está','error');tempSizes.push(v);document.getElementById('sizeInput').value='';renderSizeChips()}
+function removeSize(i){tempSizes.splice(i,1);renderSizeChips()}
+function renderSizeChips(){document.getElementById('sizeChips').innerHTML=tempSizes.map((s,i)=>`<div class="chip">${escapeHTML(s)}<button onclick="removeSize(${i})">✕</button></div>`).join('')||'<span style="font-size:12px;color:var(--muted);">Sin tallas</span>'}
+document.getElementById('sizeInput')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addSize()}});
+document.getElementById('colorHex')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addColor()}});
+
+function renderCollections(){
+  const list=document.getElementById('collectionsList');
+  if(state.collections.length===0){list.innerHTML='<div class="empty-card"><h3>Sin colecciones</h3><button class="btn btn-primary" onclick="openCollectionModal()">+ Nueva</button></div>';return}
+  list.innerHTML=`<div class="products-table"><div class="products-row header"><div></div><div>Colección</div><div class="pcol">ID</div><div class="pprice"></div><div class="pstatus">Productos</div><div></div></div>${state.collections.map((c,i)=>{const cnt=state.products.filter(p=>p.collection===c.id).length;return `<div class="products-row"><img class="thumb" src="${escapeHTML(c.image||'')}"><div><div class="pname">${escapeHTML(c.name)}</div><div style="font-size:12px;color:var(--muted);">${escapeHTML(c.description||'')}</div></div><div class="pcol">${escapeHTML(c.id)}</div><div class="pprice"></div><div class="pstatus">${cnt} productos</div><div class="row-actions"><button onclick="openCollectionModal(${i})"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button class="del" onclick="quickDeleteCollection(${i})"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></div>`}).join('')}</div>`;
+}
+function openCollectionModal(i=null){currentCollectionEdit=i;const c=i!==null?state.collections[i]:{};document.getElementById('collectionModalTitle').textContent=i!==null?'Editar colección':'Nueva colección';document.getElementById('c-idInput').value=c.id||'';document.getElementById('c-name').value=c.name||'';document.getElementById('c-description').value=c.description||'';document.getElementById('c-image').value=c.image||'';document.getElementById('cDeleteBtn').style.display=i!==null?'inline-flex':'none';document.getElementById('collectionModal').classList.add('open');document.getElementById('modalOverlay').classList.add('open')}
+function closeCollectionModal(){closeModal()}
+function saveCollection(){const id=(document.getElementById('c-idInput').value.trim()||slugify(document.getElementById('c-name').value)).toLowerCase().replace(/[^a-z0-9-]/g,'-');const name=document.getElementById('c-name').value.trim();if(!name)return toast('Nombre obligatorio','error');const col={id,name,description:document.getElementById('c-description').value.trim(),image:document.getElementById('c-image').value.trim()};if(currentCollectionEdit!==null){state.collections[currentCollectionEdit]=col;toast('Actualizada')}else{state.collections.push(col);toast('Agregada')}persist();renderCollections();closeCollectionModal()}
+function deleteCollection(){if(currentCollectionEdit===null)return;if(!confirm('¿Eliminar?'))return;state.collections.splice(currentCollectionEdit,1);persist();renderCollections();closeCollectionModal()}
+function quickDeleteCollection(i){if(!confirm(`¿Eliminar "${state.collections[i].name}"?`))return;state.collections.splice(i,1);persist();renderCollections()}
+
+function renderSettings(){const c=state.config||{};document.getElementById('cfg-brandName').value=c.brandName||'';document.getElementById('cfg-tagline').value=c.tagline||''}
+function saveSettings(){state.config.brandName=document.getElementById('cfg-brandName').value.trim();state.config.tagline=document.getElementById('cfg-tagline').value.trim();const np=document.getElementById('cfg-newPassword').value;if(np&&np.length>=4){localStorage.setItem(PWD_KEY,np);document.getElementById('cfg-newPassword').value='';toast('Contraseña actualizada')}else if(np&&np.length<4){return toast('Mínimo 4 caracteres','error')}persist();toast('Guardado')}
+
+// =========== CONTENIDO DEL SITIO ===========
+function renderContent(){
+  const c=state.config||{};
+  if(!c.announcements)c.announcements=[];
+  if(c.announcementBarVisible===undefined)c.announcementBarVisible=true;
+  if(!c.navigation)c.navigation=[{label:"Productos",href:"#productos"},{label:"Colecciones",href:"#colecciones"},{label:"Nosotros",href:"#nosotros"},{label:"Tiendas",href:"#tiendas"}];
+  if(!c.hero)c.hero={};
+  if(!c.manifesto)c.manifesto={visible:true,pills:[]};
+  if(!c.editorial)c.editorial={visible:true,blocks:[]};
+  if(!c.newsletter)c.newsletter={visible:true};
+  if(!c.footer)c.footer={columns:[],payments:[]};
+  if(!c.features)c.features=[];
+  if(c.featuresVisible===undefined)c.featuresVisible=true;
+  if(!c.sections)c.sections={};
+  
+  document.getElementById('annBarVisible').checked=c.announcementBarVisible!==false;
+  renderAnnList();renderNavList();
+  
+  const h=c.hero;
+  document.getElementById('hero-eyebrow').value=h.eyebrow||'';
+  document.getElementById('hero-title1').value=h.titleLine1||'';
+  document.getElementById('hero-title2i').value=h.titleLine2Italic||'';
+  document.getElementById('hero-title2r').value=h.titleLine2Rest||'';
+  document.getElementById('hero-image').value=h.image||'';
+  document.getElementById('hero-cta1').value=h.ctaPrimary||'';
+  document.getElementById('hero-cta2').value=h.ctaSecondary||'';
+  updateHeroPreview();
+  
+  // Manifesto
+  const m=c.manifesto;
+  document.getElementById('mfVisible').checked=m.visible!==false;
+  document.getElementById('mf-eyebrow').value=m.eyebrow||'';
+  document.getElementById('mf-title').value=m.title||'';
+  document.getElementById('mf-titleItalic').value=m.titleItalic||'';
+  document.getElementById('mf-body1').value=m.body1||'';
+  document.getElementById('mf-body2').value=m.body2||'';
+  document.getElementById('mf-image').value=m.image||'';
+  updateMfPreview();
+  renderPills();
+  
+  // Editorial
+  document.getElementById('edVisible').checked=c.editorial.visible!==false;
+  renderEdBlocks();
+  
+  // Newsletter
+  const nl=c.newsletter;
+  document.getElementById('nlVisible').checked=nl.visible!==false;
+  document.getElementById('nl-eyebrow').value=nl.eyebrow||'';
+  document.getElementById('nl-title').value=nl.title||'';
+  document.getElementById('nl-titleI').value=nl.titleItalic||'';
+  document.getElementById('nl-titleR').value=nl.titleRest||'';
+  document.getElementById('nl-sub').value=nl.subtitle||'';
+  document.getElementById('nl-placeholder').value=nl.placeholder||'';
+  document.getElementById('nl-btn').value=nl.buttonText||'';
+  
+  // Footer
+  renderFooterCols();renderPayments();
+  document.getElementById('footer-copy').value=c.footer.copyrightSuffix||'';
+  
+  // Features bar
+  document.getElementById('featVisible').checked=c.featuresVisible!==false;
+  renderFeatList();
+  
+  // Section titles
+  document.getElementById('sec-colEyebrow').value=c.sections.collectionsEyebrow||'';
+  document.getElementById('sec-colTitle').value=c.sections.collectionsTitle||'';
+  document.getElementById('sec-colTitleI').value=c.sections.collectionsTitleItalic||'';
+  document.getElementById('sec-prodEyebrow').value=c.sections.productsEyebrow||'';
+  document.getElementById('sec-prodTitle').value=c.sections.productsTitle||'';
+  document.getElementById('sec-prodTitleI').value=c.sections.productsTitleItalic||'';
+}
+
+function renderAnnList(){
+  const c=state.config;
+  document.getElementById('annList').innerHTML=(c.announcements||[]).map((a,i)=>`<div style="display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;"><input style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(a)}" oninput="updateAnn(${i},this.value)"><button onclick="moveAnn(${i},-1)" ${i===0?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">↑</button><button onclick="moveAnn(${i},1)" ${i===c.announcements.length-1?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">↓</button><button onclick="removeAnn(${i})" style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">✕</button></div>`).join('')||'<div style="font-size:13px;color:var(--muted);padding:12px 0;">No hay mensajes.</div>';
+}
+function addAnnouncement(){const v=document.getElementById('annInput').value.trim();if(!v)return toast('Escribe el mensaje','error');state.config.announcements=state.config.announcements||[];state.config.announcements.push(v);document.getElementById('annInput').value='';renderAnnList();persist();toast('Agregado')}
+function updateAnn(i,v){state.config.announcements[i]=v;clearTimeout(window._annT);window._annT=setTimeout(()=>persist(),500)}
+function removeAnn(i){state.config.announcements.splice(i,1);renderAnnList();persist()}
+function moveAnn(i,d){const ni=i+d;const a=state.config.announcements;if(ni<0||ni>=a.length)return;[a[i],a[ni]]=[a[ni],a[i]];renderAnnList();persist()}
+document.getElementById('annInput')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addAnnouncement()}});
+
+function renderNavList(){
+  const c=state.config;
+  document.getElementById('navList').innerHTML=(c.navigation||[]).map((n,i)=>`<div style="display:grid;grid-template-columns:1fr 1fr auto auto auto;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;"><input placeholder="Etiqueta" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(n.label)}" oninput="updateNav(${i},'label',this.value)"><input placeholder="Enlace" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(n.href)}" oninput="updateNav(${i},'href',this.value)"><button onclick="moveNav(${i},-1)" ${i===0?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">↑</button><button onclick="moveNav(${i},1)" ${i===c.navigation.length-1?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">↓</button><button onclick="removeNav(${i})" style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">✕</button></div>`).join('')||'<div style="font-size:13px;color:var(--muted);padding:12px 0;">No hay opciones de menú.</div>';
+}
+function addNavItem(){state.config.navigation=state.config.navigation||[];state.config.navigation.push({label:"Nueva opción",href:"#"});renderNavList();persist()}
+function updateNav(i,k,v){state.config.navigation[i][k]=v;clearTimeout(window._navT);window._navT=setTimeout(()=>persist(),500)}
+function removeNav(i){state.config.navigation.splice(i,1);renderNavList();persist()}
+function moveNav(i,d){const ni=i+d;const a=state.config.navigation;if(ni<0||ni>=a.length)return;[a[i],a[ni]]=[a[ni],a[i]];renderNavList();persist()}
+
+function updateHeroPreview(){const url=document.getElementById('hero-image').value.trim();document.getElementById('hero-img-preview').innerHTML=url?`<img src="${escapeHTML(url)}" style="width:100%;max-height:200px;object-fit:cover;border-radius:8px;border:1px solid var(--line);" onerror="this.style.display='none'">`:''}
+document.getElementById('hero-image')?.addEventListener('input',updateHeroPreview);
+
+// MANIFESTO pills
+function renderPills(){
+  const pills=(state.config.manifesto.pills||[]);
+  document.getElementById('mfPills').innerHTML=pills.map((p,i)=>`<div class="chip">${escapeHTML(p)}<button onclick="removePill(${i})">✕</button></div>`).join('')||'<span style="font-size:12px;color:var(--muted);">Sin pills</span>';
+}
+function addPill(){const v=document.getElementById('mfPillInput').value.trim();if(!v)return;state.config.manifesto.pills=state.config.manifesto.pills||[];if(state.config.manifesto.pills.includes(v))return toast('Ya está','error');state.config.manifesto.pills.push(v);document.getElementById('mfPillInput').value='';renderPills();persist()}
+function removePill(i){state.config.manifesto.pills.splice(i,1);renderPills();persist()}
+document.getElementById('mfPillInput')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addPill()}});
+function updateMfPreview(){const url=document.getElementById('mf-image').value.trim();document.getElementById('mf-preview').innerHTML=url?`<img src="${escapeHTML(url)}" style="width:160px;aspect-ratio:4/5;object-fit:cover;border-radius:8px;border:1px solid var(--line);" onerror="this.style.display='none'">`:''}
+document.getElementById('mf-image')?.addEventListener('input',updateMfPreview);
+
+// EDITORIAL BLOCKS
+function renderEdBlocks(){
+  const blocks=state.config.editorial.blocks||[];
+  document.getElementById('edBlocksList').innerHTML=blocks.map((b,i)=>`
+    <div style="background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <strong style="font-size:13px;">Bloque ${i+1}</strong>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <label class="switch" style="gap:6px;"><input type="checkbox" ${b.visible!==false?'checked':''} onchange="updateEdBlock(${i},'visible',this.checked)"><div class="switch-track"></div></label>
+          <button onclick="removeEdBlock(${i})" style="color:var(--danger);background:transparent;border:none;padding:4px 8px;cursor:pointer;">Eliminar</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+        <input placeholder="Título (Lookbook)" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(b.title||'')}" oninput="updateEdBlock(${i},'title',this.value)">
+        <input placeholder="Itálica (SS26)" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(b.italic||'')}" oninput="updateEdBlock(${i},'italic',this.value)">
+      </div>
+      <input placeholder="Subtítulo" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;width:100%;margin-bottom:8px;" value="${escapeHTML(b.subtitle||'')}" oninput="updateEdBlock(${i},'subtitle',this.value)">
+      <input placeholder="URL imagen" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;width:100%;margin-bottom:8px;" value="${escapeHTML(b.image||'')}" oninput="updateEdBlock(${i},'image',this.value)">
+      <input placeholder="Texto del enlace (Explorar)" style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;width:100%;" value="${escapeHTML(b.linkText||'')}" oninput="updateEdBlock(${i},'linkText',this.value)">
+    </div>`).join('')||'<div style="font-size:13px;color:var(--muted);padding:12px 0;">No hay bloques editoriales.</div>';
+}
+function addEdBlock(){state.config.editorial.blocks=state.config.editorial.blocks||[];state.config.editorial.blocks.push({title:"Nuevo",italic:"",subtitle:"",image:"",linkText:"Ver más",visible:true});renderEdBlocks();persist()}
+function updateEdBlock(i,k,v){state.config.editorial.blocks[i][k]=v;clearTimeout(window._edT);window._edT=setTimeout(()=>persist(),500)}
+function removeEdBlock(i){if(!confirm('¿Eliminar este bloque?'))return;state.config.editorial.blocks.splice(i,1);renderEdBlocks();persist()}
+
+// FOOTER columns
+function renderFooterCols(){
+  const cols=state.config.footer.columns||[];
+  document.getElementById('footerColumnsAdmin').innerHTML=cols.map((c,i)=>`
+    <div style="background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:14px;margin-bottom:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:8px;">
+        <input placeholder="Título columna" style="flex:1;padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;font-weight:600;outline:none;background:white;" value="${escapeHTML(c.title||'')}" oninput="updateFooterColTitle(${i},this.value)">
+        <button onclick="removeFooterColumn(${i})" style="color:var(--danger);background:transparent;border:none;padding:4px 8px;cursor:pointer;">Eliminar</button>
+      </div>
+      <div id="footerCol-${i}-links">
+        ${(c.links||[]).map((l,j)=>`<div style="display:grid;grid-template-columns:1fr 1fr auto;gap:6px;margin-bottom:6px;"><input placeholder="Etiqueta" style="padding:6px 10px;border:1px solid var(--line);border-radius:6px;font-size:12px;outline:none;background:white;" value="${escapeHTML(l.label||'')}" oninput="updateFooterLink(${i},${j},'label',this.value)"><input placeholder="Enlace" style="padding:6px 10px;border:1px solid var(--line);border-radius:6px;font-size:12px;outline:none;background:white;" value="${escapeHTML(l.href||'')}" oninput="updateFooterLink(${i},${j},'href',this.value)"><button onclick="removeFooterLink(${i},${j})" style="color:var(--muted);background:transparent;border:none;padding:4px 8px;cursor:pointer;">✕</button></div>`).join('')}
+      </div>
+      <button onclick="addFooterLink(${i})" style="margin-top:6px;font-size:12px;padding:6px 12px;border-radius:6px;background:white;border:1px solid var(--line);cursor:pointer;">+ Agregar enlace</button>
+    </div>`).join('')||'<div style="font-size:13px;color:var(--muted);padding:12px 0;">No hay columnas.</div>';
+}
+function addFooterColumn(){state.config.footer.columns=state.config.footer.columns||[];state.config.footer.columns.push({title:"Nueva",links:[]});renderFooterCols();persist()}
+function removeFooterColumn(i){if(!confirm('¿Eliminar columna?'))return;state.config.footer.columns.splice(i,1);renderFooterCols();persist()}
+function updateFooterColTitle(i,v){state.config.footer.columns[i].title=v;clearTimeout(window._fcT);window._fcT=setTimeout(()=>persist(),500)}
+function addFooterLink(i){state.config.footer.columns[i].links=state.config.footer.columns[i].links||[];state.config.footer.columns[i].links.push({label:"Nuevo",href:"#"});renderFooterCols();persist()}
+function removeFooterLink(ci,li){state.config.footer.columns[ci].links.splice(li,1);renderFooterCols();persist()}
+function updateFooterLink(ci,li,k,v){state.config.footer.columns[ci].links[li][k]=v;clearTimeout(window._flT);window._flT=setTimeout(()=>persist(),500)}
+
+// Payments
+function renderPayments(){
+  const pays=state.config.footer.payments||[];
+  document.getElementById('paymentsList').innerHTML=pays.map((p,i)=>`<div class="chip">${escapeHTML(p)}<button onclick="removePayment(${i})">✕</button></div>`).join('')||'<span style="font-size:12px;color:var(--muted);">Sin métodos</span>';
+}
+function addPayment(){const v=document.getElementById('paymentInput').value.trim();if(!v)return;state.config.footer.payments=state.config.footer.payments||[];if(state.config.footer.payments.includes(v))return toast('Ya está','error');state.config.footer.payments.push(v.toUpperCase());document.getElementById('paymentInput').value='';renderPayments();persist()}
+function removePayment(i){state.config.footer.payments.splice(i,1);renderPayments();persist()}
+document.getElementById('paymentInput')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addPayment()}});
+
+// FEATURES BAR
+function renderFeatList(){
+  const c=state.config;
+  document.getElementById('featList').innerHTML=(c.features||[]).map((f,i)=>`<div style="display:grid;grid-template-columns:1fr auto auto auto;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px;"><input style="padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:13px;outline:none;background:white;" value="${escapeHTML(f)}" oninput="updateFeat(${i},this.value)"><button onclick="moveFeat(${i},-1)" ${i===0?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">↑</button><button onclick="moveFeat(${i},1)" ${i===c.features.length-1?'disabled style="opacity:.3"':''} style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">↓</button><button onclick="removeFeat(${i})" style="width:30px;height:30px;border-radius:6px;color:var(--muted);background:transparent;border:none;cursor:pointer;">✕</button></div>`).join('')||'<div style="font-size:13px;color:var(--muted);padding:12px 0;">Sin características.</div>';
+}
+function addFeat(){const v=document.getElementById('featInput').value.trim();if(!v)return toast('Escribe algo','error');state.config.features=state.config.features||[];state.config.features.push(v);document.getElementById('featInput').value='';renderFeatList();persist();toast('Agregada')}
+function updateFeat(i,v){state.config.features[i]=v;clearTimeout(window._featT);window._featT=setTimeout(()=>persist(),500)}
+function removeFeat(i){state.config.features.splice(i,1);renderFeatList();persist()}
+function moveFeat(i,d){const ni=i+d;const a=state.config.features;if(ni<0||ni>=a.length)return;[a[i],a[ni]]=[a[ni],a[i]];renderFeatList();persist()}
+document.getElementById('featInput')?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();addFeat()}});
+
+function saveContent(){
+  const c=state.config;
+  c.announcementBarVisible=document.getElementById('annBarVisible').checked;
+  c.hero=c.hero||{};
+  c.hero.eyebrow=document.getElementById('hero-eyebrow').value.trim();
+  c.hero.titleLine1=document.getElementById('hero-title1').value.trim();
+  c.hero.titleLine2Italic=document.getElementById('hero-title2i').value.trim();
+  c.hero.titleLine2Rest=document.getElementById('hero-title2r').value.trim();
+  c.hero.image=document.getElementById('hero-image').value.trim();
+  c.hero.ctaPrimary=document.getElementById('hero-cta1').value.trim();
+  c.hero.ctaSecondary=document.getElementById('hero-cta2').value.trim();
+  c.manifesto=c.manifesto||{};
+  c.manifesto.visible=document.getElementById('mfVisible').checked;
+  c.manifesto.eyebrow=document.getElementById('mf-eyebrow').value.trim();
+  c.manifesto.title=document.getElementById('mf-title').value.trim();
+  c.manifesto.titleItalic=document.getElementById('mf-titleItalic').value.trim();
+  c.manifesto.body1=document.getElementById('mf-body1').value.trim();
+  c.manifesto.body2=document.getElementById('mf-body2').value.trim();
+  c.manifesto.image=document.getElementById('mf-image').value.trim();
+  c.editorial=c.editorial||{};
+  c.editorial.visible=document.getElementById('edVisible').checked;
+  c.newsletter=c.newsletter||{};
+  c.newsletter.visible=document.getElementById('nlVisible').checked;
+  c.newsletter.eyebrow=document.getElementById('nl-eyebrow').value.trim();
+  c.newsletter.title=document.getElementById('nl-title').value.trim();
+  c.newsletter.titleItalic=document.getElementById('nl-titleI').value.trim();
+  c.newsletter.titleRest=document.getElementById('nl-titleR').value.trim();
+  c.newsletter.subtitle=document.getElementById('nl-sub').value.trim();
+  c.newsletter.placeholder=document.getElementById('nl-placeholder').value.trim();
+  c.newsletter.buttonText=document.getElementById('nl-btn').value.trim();
+  c.footer=c.footer||{};
+  c.footer.copyrightSuffix=document.getElementById('footer-copy').value.trim();
+  c.featuresVisible=document.getElementById('featVisible').checked;
+  c.sections=c.sections||{};
+  c.sections.collectionsEyebrow=document.getElementById('sec-colEyebrow').value.trim();
+  c.sections.collectionsTitle=document.getElementById('sec-colTitle').value.trim();
+  c.sections.collectionsTitleItalic=document.getElementById('sec-colTitleI').value.trim();
+  c.sections.productsEyebrow=document.getElementById('sec-prodEyebrow').value.trim();
+  c.sections.productsTitle=document.getElementById('sec-prodTitle').value.trim();
+  c.sections.productsTitleItalic=document.getElementById('sec-prodTitleI').value.trim();
+  persist();
+  toast('Guardado · Publica para que se vea en el sitio');
+}
+
+function exportFile(){const c=generateProductsJS();downloadFile('products.js',c,'text/javascript');state.dirty=false;persist(false);toast('Descargado')}
+function generateProductsJS(){const ts=new Date().toLocaleString('es-CO');return `/* Generado ${ts} */\n\nwindow.SITE_CONFIG = ${JSON.stringify(state.config,null,2)};\n\nwindow.COLLECTIONS = ${JSON.stringify(state.collections,null,2)};\n\nwindow.PRODUCTS = ${JSON.stringify(state.products,null,2)};\n`}
+
+function checkPublishSetup(){const p=localStorage.getItem(PUBLISH_PWD_KEY);document.getElementById('publishSetup').style.display=p?'none':'block'}
+function savePublishPassword(){const p=document.getElementById('publishPwd').value.trim();if(!p)return toast('Escribe contraseña','error');localStorage.setItem(PUBLISH_PWD_KEY,p);document.getElementById('publishPwd').value='';document.getElementById('publishSetup').style.display='none';toast('Guardada')}
+
+async function publishToSite(){
+  let pwd=localStorage.getItem(PUBLISH_PWD_KEY);
+  if(!pwd){checkPublishSetup();return toast('Configura contraseña primero','error')}
+  const btn=document.getElementById('publishBtn'),btnText=document.getElementById('publishBtnText'),statusEl=document.getElementById('publishStatus');
+  const orig=btnText.textContent;
+  btn.disabled=true;btnText.textContent='Publicando...';statusEl.style.display='block';statusEl.textContent='⏳ Enviando cambios...';statusEl.style.color='rgba(245,243,238,.7)';
+  try{
+    const r=await fetch('/.netlify/functions/publish',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:pwd,config:state.config,collections:state.collections,products:state.products})});
+    const d=await r.json();
+    if(!r.ok){if(r.status===401){localStorage.removeItem(PUBLISH_PWD_KEY);checkPublishSetup();throw new Error(d.error||'Contraseña incorrecta')}throw new Error(d.error||`Error ${r.status}`)}
+    state.dirty=false;persist(false);
+    statusEl.textContent='✅ '+(d.message||'Publicado. Se actualizará en ~30-60s.');statusEl.style.color='#7FE89A';btnText.textContent='✓ Publicado';toast('¡Publicado!');
+    setTimeout(()=>{btn.disabled=false;btnText.textContent=orig},5000);
+  }catch(err){statusEl.textContent='❌ '+err.message;statusEl.style.color='#FF9B9B';btn.disabled=false;btnText.textContent=orig;toast(err.message,'error')}
+}
+
+function exportJSON(){const d={config:state.config,collections:state.collections,products:state.products,exportedAt:new Date().toISOString()};downloadFile('moda-backup-'+Date.now()+'.json',JSON.stringify(d,null,2),'application/json');toast('Backup descargado')}
+function importJSON(input){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=e=>{try{const d=JSON.parse(e.target.result);if(!confirm('¿Reemplazar todos los datos?'))return;if(d.config)state.config=d.config;if(d.collections)state.collections=d.collections;if(d.products)state.products=migrateProducts(d.products);persist();renderProducts();renderCollections();renderSettings();toast('Importado')}catch{toast('Archivo inválido','error')}};r.readAsText(f);input.value=''}
+function downloadFile(name,content,type){const b=new Blob([content],{type});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download=name;a.click();URL.revokeObjectURL(u)}
+function formatCOP(n){return '$'+(n||0).toLocaleString('es-CO')+' COP'}
+function escapeHTML(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c])}
+function slugify(s){return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').substring(0,30)}
+function toast(msg,type='success'){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+type+' show';setTimeout(()=>t.classList.remove('show'),2500)}
+
+Object.assign(window,{openProductModal,closeModal,saveProduct,deleteProduct,quickDelete,addColor,removeColor,addSize,removeSize,openCollectionModal,closeCollectionModal,saveCollection,deleteCollection,quickDeleteCollection,saveSettings,exportFile,publishToSite,savePublishPassword,exportJSON,importJSON,doLogin,logout,addImage,updateImage,removeImage,moveImage,addAnnouncement,updateAnn,removeAnn,moveAnn,addNavItem,updateNav,removeNav,moveNav,saveContent,addPill,removePill,addEdBlock,updateEdBlock,removeEdBlock,addFooterColumn,removeFooterColumn,updateFooterColTitle,addFooterLink,removeFooterLink,updateFooterLink,addPayment,removePayment,addFeat,updateFeat,removeFeat,moveFeat,addVariant,updateVariant,removeVariant,moveVariant});
+
+init();checkPublishSetup();
+</script>
+</body>
+</html>
